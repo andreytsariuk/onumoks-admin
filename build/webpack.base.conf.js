@@ -38,10 +38,6 @@ module.exports = {
         include: [resolve('src'), resolve('test')]
       },
       {
-        test: /\.styl$/,
-        loader: ['style-loader', 'css-loader', 'stylus-loader']
-      },
-      {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
@@ -65,6 +61,7 @@ module.exports = {
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       }
-    ]
+    ],
+    loaders : [ { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' } ]
   }
 }

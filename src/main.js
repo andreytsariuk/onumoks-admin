@@ -7,15 +7,24 @@ import router from './router'
 import Notifications from 'vue-notification';
 import VueCookie from 'vue-cookie';
 
-
+import './stylus/main.styl';
 //----------------------CSS__INCLUDES------------
 import '../static/css/MaterialIcons.css';
-
+import colors from 'vuetify/es5/util/colors'
 
 
 Vue.use(VueCookie);
 Vue.use(Notifications);
-Vue.use(Vuetify)
+Vue.use(Vuetify, {
+  theme: {
+    primary: colors.teal.darken3,
+    secondary: colors.grey.lighten4,
+    accent: '#8c9eff',
+    error: '#b71c1c',
+    lighten:colors.grey.lighten4,
+  },
+  lighten:colors.grey.lighten4
+})
 Vue.config.productionTip = false
 router.beforeEach((route, redirect, next) => {
 

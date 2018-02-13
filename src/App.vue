@@ -1,7 +1,7 @@
 <template>
-  <v-app dark>
+  <v-app light>
     <notifications />
-    <router-view ></router-view>
+    <router-view name="Home"></router-view>
     <router-view name="SignIn"></router-view>
     <v-footer :fixed="fixed">
       <span>&copy; 2017</span>
@@ -30,9 +30,10 @@ export default {
 </script>
 
 <style lang="stylus">
-
   @import './stylus/main'
 </style>
+
+
 <style lang="css">
 
   .padding{

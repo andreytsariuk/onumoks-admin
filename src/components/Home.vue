@@ -1,7 +1,7 @@
 
 
 <template>
-    <v-app id="inspire" dark>
+    <v-app id="inspire" >
         <v-navigation-drawer clipped persistent v-model="drawer" enable-resize-watcher app>
             <SideBar></SideBar>
         </v-navigation-drawer>

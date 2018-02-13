@@ -5,7 +5,7 @@
                 <v-subheader>E-mail</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-text-field :disabled="disabled" v-model="email" :rules="Rules.requiredEmailRules" required label="E-mail" dark></v-text-field>
+                <v-text-field :disabled="disabled" v-model="email" :rules="Rules.requiredEmailRules" required label="E-mail"></v-text-field>
             </v-flex>
         </v-layout>
         <v-layout row>
@@ -13,8 +13,8 @@
                 <v-subheader>Password</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-text-field name="input-10-1" label="Enter your password" hint="At least 8 characters" v-model="password"  :append-icon="passwordVisibility ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (passwordVisibility = !passwordVisibility) "
-                    :type="passwordVisibility ? 'password' : 'text'" counter required :rules="Rules.requiredPasswordRules"></v-text-field>
+                <v-text-field name="input-10-1" label="Enter your password" hint="At least 8 characters" v-model="password" :append-icon="passwordVisibility ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (passwordVisibility = !passwordVisibility) " :type="passwordVisibility ? 'password' : 'text'"
+                    counter required :rules="Rules.requiredPasswordRules"></v-text-field>
             </v-flex>
         </v-layout>
         <v-btn class="submit-button" type="submit"></v-btn>

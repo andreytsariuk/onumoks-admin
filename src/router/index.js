@@ -20,7 +20,7 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home,
+      components: {Home},
       children: [
         //-----------------------Users----------------
         {
@@ -125,7 +125,10 @@ export default new Router({
     {
       path: '/sign-in',
       name: 'SignIn',
-      component: SignIn
+      components: {
+        default: SignIn,
+        SignIn: SignIn
+      }
     }
   ]
 })

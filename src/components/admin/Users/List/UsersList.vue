@@ -5,7 +5,7 @@
     <div>
         <v-layout row wrap>
             <v-flex xs12 class="padding elevation-0">
-                <v-card class="blue-grey darken-2 white--text ">
+                <v-card class=" white--text ">
                     <v-card-title>
                        <h4> Users </h4>
                         <v-spacer></v-spacer>
@@ -22,7 +22,7 @@
         </v-layout>
         <v-layout row wrap>
             <v-flex class="elevation-0 padding " sm12>
-                <v-card darck>
+                <v-card >
                     <v-data-table v-model="selected" select-all selected-key="name" v-bind:headers="headers" v-bind:items="items" v-bind:search="search" v-bind:pagination.sync="pagination" :total-items="totalItems" :loading="loading" class="elevation-1">
                     <template slot="headerCell" scope="props">
                         
