@@ -1,7 +1,8 @@
 <template>
     <v-list>
         <v-list-group v-for="(item, i) in items" :key="i">
-            <v-list-tile slot="activator"  ripple @click.native="navigate(item)">
+             
+            <v-list-tile  slot="activator"  ripple @click.native="navigate(item)">
                 <v-list-tile-action>
                     <v-icon v-html="item.icon"></v-icon>
                 </v-list-tile-action>

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import SideBar from './admin/SideBar'
+    import SideBar from './SideBar'
     export default {
         data: () => ({
             clipped: true,

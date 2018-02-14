@@ -36,7 +36,7 @@ export default {
             return `${Config.ApiUrl}/users/${this.$route.params.id}/profile/avatar`;
         },
         back() {
-            this.$router.push('/subjects');
+            this.$router.push('/admin/subjects');
         },
         create() {
             return Api

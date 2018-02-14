@@ -18,12 +18,13 @@ Vue.use(Notifications);
 Vue.use(Vuetify, {
   theme: {
     primary: colors.teal.darken3,
-    secondary: colors.grey.lighten4,
+    secondary: colors.grey.darken2,
     accent: '#8c9eff',
-    error: '#b71c1c',
+    error: '#ff0000',
     lighten:colors.grey.lighten4,
   },
-  lighten:colors.grey.lighten4
+  lighten:colors.grey.lighten4,
+  'font-family':'Oswald'
 })
 Vue.config.productionTip = false
 router.beforeEach((route, redirect, next) => {

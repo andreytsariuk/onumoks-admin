@@ -48,7 +48,7 @@
         },
         methods: {
             back() {
-                this.$router.push('/specialties');
+                this.$router.push('/admin/specialties');
             },
             clear() {
                 this.$refs.GeneralForm.clear()

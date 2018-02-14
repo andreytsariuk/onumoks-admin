@@ -55,7 +55,7 @@
         },
         methods: {
             back() {
-                this.$router.push('/courses');
+                this.$router.push('/admin/courses');
             },
             edit() {
                 this.disabled = !this.disabled;

@@ -190,7 +190,7 @@
           });
       },
       back() {
-        this.$router.push('/users');
+        this.$router.push('/admin/users');
       },
       save(formData) {
         // upload data to the server

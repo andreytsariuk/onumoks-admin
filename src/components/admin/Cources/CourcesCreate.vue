@@ -49,7 +49,7 @@
         },
         methods: {
             back() {
-                this.$router.push('/courses');
+                this.$router.push('/admin/courses');
             },
             clear() {
                 this.$refs.GeneralForm.clear()

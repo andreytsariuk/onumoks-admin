@@ -50,7 +50,7 @@
         },
         methods: {
             back() {
-                this.$router.push('/specialties');
+                this.$router.push('/admin/specialties');
             },
             edit() {
                 this.disabled = !this.disabled;
