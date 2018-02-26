@@ -11,7 +11,14 @@ export default (error) => {
                     title: 'Unauthorize',
                     text: error.response.data
                 });
-                router.push('/sign-in');
+                // router.push('/sign-in');
+                break;
+            case error.response.status == 404:
+                router.app.$notify({
+                    type: 'error',
+                    title: 'Not Found',
+                    text: String(error.response.data).length > 20 ? 'Sorry, requested not found.' : error.response.data
+                });
                 break;
 
             default:
@@ -22,5 +29,6 @@ export default (error) => {
                 });
                 break;
         }
+        throw error;
     }
 }

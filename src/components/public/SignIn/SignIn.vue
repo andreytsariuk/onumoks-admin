@@ -12,19 +12,21 @@
             <v-stepper-step step="1" :complete="stepper > 1"><span class="stepper-title">Workspace</span> </v-stepper-step>
             <v-divider></v-divider>
             <v-stepper-step step="2" :complete="stepper > 2"><span class="stepper-title">Credentials</span></v-stepper-step>
-            <v-divider></v-divider>
-  
+            <v-divider>   </v-divider>
+
+
+
           </v-stepper-header>
           <v-stepper-items>
             <v-stepper-content step="1">
               <v-form v-model="validWorkspace" class="transparent static-height" v-on:submit.prevent="submitWorkspace">
   
                 <v-card class="elevation-0 transparent">
-                  <v-text-field label="Workspace" v-model="workspace" required></v-text-field>
+                  <v-text-field label="Workspace" v-model="workspace_name" required></v-text-field>
   
   
                 </v-card>
-                <v-btn color="primary" type="submit">Continue</v-btn>
+                <v-btn :disabled="!!!workspace_name" color="primary" type="submit">Continue</v-btn>
   
               </v-form>
   
@@ -34,7 +36,7 @@
               <div>
   
                 <v-avatar :tile="false" :size="200" class="workspace-logo grey darken-4" color="secondry">
-                  <img :class="{ 'visible-logo': stepper > 1  }" class="grey darken-1" src="/static/images/logo.png" alt="">
+                  <img :class="{ 'visible-logo': stepper > 1  }" class="grey darken-1" :src="workspace.avatar.publicPath" alt="">
                 </v-avatar>
   
   
@@ -60,149 +62,150 @@
 </template>
 
 <script>
-  import {
-    Api
-  } from "../../../services";
-  import jwt_decode from "jwt-decode";
-  import SignInForm from "./SignInForm.vue";
-  export default {
-    name: "hello",
-    data() {
-      return {
-        loader: null,
-        loading3: false,
-        stepper: 0,
-        workspace: "",
-        validWorkspace: false
-      };
-    },
-    components: {
-      SignInForm
-    },
-    watch: {
-      loader() {
-        const l = this.loader;
-        this[l] = !this[l];
-        setTimeout(() => (this[l] = false), 2000);
-        // @click.native="loader = 'loading3'" :disabled="loading3"
-        this.loader = null;
+import { Api, ApiService } from "../../../services";
+import jwt_decode from "jwt-decode";
+import SignInForm from "./SignInForm.vue";
+export default {
+  name: "hello",
+  data() {
+    return {
+      loader: null,
+      loading3: false,
+      stepper: 0,
+      workspace_name: "",
+      validWorkspace: false,
+      workspace: {
+        avatar: {}
       }
+    };
+  },
+  components: {
+    SignInForm
+  },
+  watch: {
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
+      setTimeout(() => (this[l] = false), 2000);
+      // @click.native="loader = 'loading3'" :disabled="loading3"
+      this.loader = null;
+    }
+  },
+  methods: {
+    submitWorkspace() {
+      console.log("Workspace", this.workspace_name);
+      if (this.workspace_name)
+        ApiService.Auth.initializeWorkspace(this.workspace_name).then(res => {
+          this.workspace = res;
+          console.log(this.workspace);
+          this.stepper = 2;
+        });
     },
-    methods: {
-      submitWorkspace() {
-        console.log("Workspace", this.workspace);
-        this.stepper = 2;
-      },
-      changeWorkspace() {
-  
-        this.stepper = 1;
-      },
-      signIn() {
-        console.log("fooooo");
-        let signInData = this.$refs.SignInForm.form();
-        if (signInData) {
-  
-          this.$router.push("/admin/users");
-  
-          // this.loading3 = true;
-          // Api.signIn(signInData)
-          //   .then(res => {
-          //     this.loading3 = false;
-          //     var decoded = jwt_decode(res.data.token);
-          //     Api.Axios().Api.setToken(res.data.token);
-          //     console.log(decoded);
-          //     this.$router.push("/users");
-          //   })
-          //   .catch(err => {
-          //     this.loading3 = false;
-          //   });
-        }
+    changeWorkspace() {
+      this.stepper = 1;
+    },
+    signIn() {
+      console.log("fooooo");
+      let signInData = this.$refs.SignInForm.form();
+      if (signInData) {
+        ApiService.Auth.signIn(
+          Object.assign(
+            {},
+            {
+              workspace_id: this.workspace.id
+            },
+            signInData
+          )
+        ).then(res => {
+          console.log("res", res);
+          this.$router.push(`/${this.workspace.name}/admin/users`);
+        });
       }
     }
-  };
+  }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-  .logo-container {
-     padding-top: 10vh;
-    text-align: center;
-  }
-  
-  .project-logo {
-    font-size: 4rem;
-    color: white;
-    margin: 0 auto;
-    display: block;
-  }
-  
-  .background {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-  
-  .background-1 {
-    background-image: url(/static/images/in-Study-background-1.jpeg);
-  }
-  
-  .background-2 {
-    background-image: url(/static/images/in-Study-background-2.jpeg);
-  }
-  
-  .background-3 {
-    background-image: url(/static/images/in-Study-background-3.jpeg);
-  }
-  
-  .background-4 {
-    background-image: url(/static/images/in-Study-background-4.jpeg);
-  }
-  
-  .bacground-muted {
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
-  }
-  
+.logo-container {
+  padding-top: 10vh;
+  text-align: center;
+}
+
+.project-logo {
+  font-size: 4rem;
+  color: white;
+  margin: 0 auto;
+  display: block;
+}
+
+.background {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.background-1 {
+  background-image: url(/static/images/in-Study-background-1.jpeg);
+}
+
+.background-2 {
+  background-image: url(/static/images/in-Study-background-2.jpeg);
+}
+
+.background-3 {
+  background-image: url(/static/images/in-Study-background-3.jpeg);
+}
+
+.background-4 {
+  background-image: url(/static/images/in-Study-background-4.jpeg);
+}
+
+.bacground-muted {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+}
+
+.login-layout {
+  padding-left: 30%;
+  padding-right: 30%;
+}
+
+.rounded {
+  border-radius: 5px;
+  border: 1px solid white !important;
+}
+
+.workspace-logo {
+  margin-top: 1vh !important;
+  margin: 0 auto;
+  display: block;
+  visibility: hidden;
+}
+
+.visible-logo {
+  visibility: visible;
+}
+
+.static-height {
+  /* height: 70vh; */
+}
+
+.stepper-title {
+  font-size: 2vh;
+}
+
+.header-border {
+  border-bottom: 1px solid white;
+}
+
+@media (max-width: 1024px) {
   .login-layout {
-   
-    padding-left: 30%;
-    padding-right: 30%;
+    padding-top: 10vh;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
   }
-  
-  .rounded {
-    border-radius: 5px;
-    border: 1px solid white!important;
-  }
-  
-  .workspace-logo {
-    margin-top: 1vh !important;
-    margin: 0 auto;
-    display: block;
-    visibility: hidden;
-  }
-  
-  .visible-logo {
-    visibility: visible;
-  }
-  
-  .static-height {
-    /* height: 70vh; */
-  }
-  
-  .stepper-title {
-    font-size: 2vh;
-  }
-  
-  .header-border {
-    border-bottom: 1px solid white;
-  }
-  
-  @media (max-width: 1024px) {
-    .login-layout {
-      padding-top: 10vh;
-      padding-left: 10px;
-      padding-right: 10px;
-      padding-bottom: 10px;
-    }
-  }
+}
 </style>

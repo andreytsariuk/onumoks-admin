@@ -27,17 +27,17 @@ export default new Router({
     {
       path: '/:workspace',
       name: 'WorkSpace',
-      component:  WorkscpaceLayout ,
+      component: WorkscpaceLayout,
       children: [
         {
           path: '/',
           name: 'Landing',
-          component:  LandingPage 
+          component: LandingPage
         },
         {
           path: 'admin',
           name: 'Admin',
-          component:  AdminHome ,
+          component: AdminHome,
           children: AdminRoutes,
           meta: {
             auth: true
@@ -46,7 +46,7 @@ export default new Router({
         {
           path: 'student',
           name: 'Student',
-          components: { StudentHome },
+          component: StudentHome,
           children: StudentRoutes,
           meta: {
             auth: true
@@ -56,6 +56,6 @@ export default new Router({
 
       ]
     },
-   
+
   ]
 })

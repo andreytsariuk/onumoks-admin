@@ -21,10 +21,10 @@ Vue.use(Vuetify, {
     secondary: colors.grey.darken2,
     accent: '#8c9eff',
     error: '#ff0000',
-    lighten:colors.grey.lighten4,
+    lighten: colors.grey.lighten4,
   },
-  lighten:colors.grey.lighten4,
-  'font-family':'Oswald'
+  lighten: colors.grey.lighten4,
+  'font-family': 'Oswald'
 })
 Vue.config.productionTip = false
 router.beforeEach((route, redirect, next) => {
@@ -33,13 +33,13 @@ router.beforeEach((route, redirect, next) => {
 
     if (token != null && token != '')
       return next();
-    else
-      return next('/sign-in');
+    //else
+    // return next('/sign-in');
   }
   if (route.matched.some(record => record.meta.auth)) {
-    router.app.$cookie.set('moks','bla');
+    router.app.$cookie.set('moks', 'bla');
     var token = router.app.$cookie.get('moks');
-  
+
     console.log('token', token);
     return handleAuth(token);
   } else {
