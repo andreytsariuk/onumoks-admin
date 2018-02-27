@@ -1,7 +1,7 @@
 {
-    "name": "test-vuejs-app",
+    "name": "instudy-web",
     "version": "1.0.0",
-    "description": "Heroku App",
+    "description": "Instudy App",
     "author": "gearmobile",
     "private": true,
     "scripts": {
