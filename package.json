@@ -5,6 +5,7 @@
   "author": "andrey <tsariukandreyjs@gmail.com>",
   "private": true,
   "scripts": {
+    "deploy": "git subtree push — prefix dist heroku master",
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js"
