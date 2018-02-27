@@ -1,4 +1,7 @@
-import Local from './local'
+import Local from './local';
+import Prod from './prod';
+
+
 
 let config = {};
 
@@ -8,7 +11,7 @@ switch (true) {
         break;
 
     default:
-        config = Local;
+        config = Prod;
         break;
 }
 
