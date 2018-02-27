@@ -17,6 +17,7 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
+    { path: '/', redirect: '/sign-in' },
     {
       path: '/sign-in',
       name: 'SignIn',
