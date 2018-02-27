@@ -1,8 +1,8 @@
 {
     "name": "instudy-web",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "Instudy App",
-    "author": "gearmobile",
+    "author": "tsariukandreyjs@gmail.com",
     "private": true,
     "scripts": {
         "postinstall": "npm install express"
