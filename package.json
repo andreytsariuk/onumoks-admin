@@ -17,6 +17,7 @@
     "js-cookie": "^2.1.4",
     "jwt-decode": "^2.2.0",
     "libphonenumber-js": "^0.4.32",
+    "localStorage": "^1.0.3",
     "moment": "^2.19.1",
     "phone": "^1.0.12",
     "style-loader": "^0.20.1",
