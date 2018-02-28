@@ -6,7 +6,7 @@ import Prod from './prod';
 let config = {};
 
 switch (true) {
-    case window.location.pathname.indexOf('localhost') !== -1:
+    case window.location.host.indexOf('localhost') !== -1:
         config = Local;
         break;
 

@@ -1,5 +1,9 @@
 import { Auth } from "./auth.api";
+import { Users } from "./users.api";
+
 
 export const ApiService = {
-  Auth: Auth
+  Auth,
+  Users
 };
+ApiService

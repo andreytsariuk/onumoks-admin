@@ -46,195 +46,203 @@
 
 
 <script>
-  import Config from '../../../../config';
-  import TimeLine from '../../TimeLine/TimeLine.vue';
-  import {
-    Api
-  } from '../../../../services';
-  import Components from './';
-  import _ from 'lodash';
-  ///sdsds
-  export default {
-    props: ['userId'],
-    data() {
-      return {
-        ApiUrl: Config.ApiUrl,
-        slider: 56,
-        tile: false,
-        nameRules: [
-          (v) => !!v || 'Name is required',
-          (v) => v !== null && v.length <= 10 || 'Name must be less than 10 characters'
-        ],
-        emailRules: [
-          (v) => {
-            console.log('v', v);
-            console.log('test', (!v || /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v)) || 'E-mail must be valid');
-            return (!v || /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v)) || 'E-mail must be valid';
-          }
-        ],
-        requiredEmailRules: [
-          (v) => !!v || 'E-mail is required',
-          (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
-        ],
-        phoneRules: [
-          (v) => !!v || 'Phone Number is required',
-          (v) => /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(v) || 'Phone number must be valid'
-        ],
-        personal_email: '',
-        User: {
-          personal_email: '',
-          profile: {}
-        },
-        valid: false,
-        url: '',
-        uploadedFiles: [],
-        uploadError: null,
-        currentStatus: null,
-        uploadFieldName: 'avatar',
-        disabled: true
+import Config from "../../../../config";
+import TimeLine from "../../TimeLine/TimeLine.vue";
+import { ApiService, AuthService } from "../../../../services";
+import Components from "./";
+import _ from "lodash";
+///sdsds
+export default {
+  props: ["userId"],
+  data() {
+    return {
+      ApiUrl: Config.ApiUrl,
+      slider: 56,
+      tile: false,
+      nameRules: [
+        v => !!v || "Name is required",
+        v =>
+          (v !== null && v.length <= 10) ||
+          "Name must be less than 10 characters"
+      ],
+      emailRules: [
+        v => {
+          console.log("v", v);
+          console.log(
+            "test",
+            !v ||
+              /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+              "E-mail must be valid"
+          );
+          return (
+            !v ||
+            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+            "E-mail must be valid"
+          );
+        }
+      ],
+      requiredEmailRules: [
+        v => !!v || "E-mail is required",
+        v =>
+          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          "E-mail must be valid"
+      ],
+      phoneRules: [
+        v => !!v || "Phone Number is required",
+        v =>
+          /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(v) ||
+          "Phone number must be valid"
+      ],
+      personal_email: "",
+      User: {
+        personal_email: "",
+        profile: {}
+      },
+      valid: false,
+      url: "",
+      uploadedFiles: [],
+      uploadError: null,
+      currentStatus: null,
+      uploadFieldName: "avatar",
+      disabled: true
+    };
+  },
+  components: {
+    UserSettings: Components.UserSettings,
+    UserForm: Components.UserForm
+  },
+  created() {
+    this.User.id = this.userId ? this.userId : this.$route.params.id;
+    return ApiService.Users.get(this.User.id)
+      .then(user => {
+        this.url = `${Config.ApiUrl}/users/${
+          this.User.id
+        }/profile/avatar?access_token=${AuthService.getToken()}`;
+        this.User = user;
+      })
+      .catch(error => {
+        console.log("error", error);
+        this.$notify({
+          type: "error",
+          title: error.title,
+          text: error.message
+        });
+      });
+  },
+  computed: {
+    avatarSize() {
+      return `${this.slider}px`;
+    },
+    isInitial() {
+      return this.currentStatus === "STATUS_INITIAL";
+    },
+    isSaving() {
+      return this.currentStatus === "STATUS_SAVING";
+    },
+    isSuccess() {
+      return this.currentStatus === "STATUS_SUCCESS";
+    },
+    isFailed() {
+      return this.currentStatus === "STATUS_FAILED";
+    }
+  },
+  methods: {
+    AvatarUrl() {
+      return ``;
+    },
+    callInput() {
+      this.$refs.fileInput.click();
+    },
+    clear() {
+      this.$refs.GeneralForm.clear();
+    },
+    edit() {
+      this.disabled = !this.disabled;
+    },
+    updateUser() {
+      let generalFormData = this.$refs.GeneralForm.form();
+      console.log("generalFormData", generalFormData);
+      if (generalFormData) {
+        return ApiService.Users.update(this.User.id, generalFormData)
+          .then(res => {
+            this.url = `${Config.ApiUrl}/users/${
+              this.User.id
+            }/profile/avatar?access_token=${Api.Axios().Api.access_token}`;
+            this.User = res.data;
+            this.$notify({
+              type: "success",
+              title: "Success",
+              text: "Profile has been updated!"
+            });
+          })
+          .catch(error => {
+            console.log("error", error);
+            this.$notify({
+              type: "error",
+              title: error.title,
+              text: error.message
+            });
+          });
       }
     },
-    components: {
-      UserSettings: Components.UserSettings,
-      UserForm: Components.UserForm
-    },
-    created() {
-      this.User.id = this.userId ? this.userId : this.$route.params.id
-      return Api
-        .Users()
-        .get(this.User.id)
+    getUser() {
+      return ApiService.Users.get(this.User.id)
         .then(res => {
-          this.url = `${Config.ApiUrl}/users/${this.User.id}/profile/avatar?access_token=${Api.Axios().Api.access_token}`;
-          console.log('Api.Axios().Api.access_token',Api.Axios().Api.access_token)
-          this.User = res.data
+          this.User = res.data;
         })
         .catch(error => {
-          console.log('error', error);
+          console.log("error", error);
           this.$notify({
-            type: 'error',
+            type: "error",
             title: error.title,
             text: error.message
           });
         });
     },
-    computed: {
-      avatarSize() {
-        return `${this.slider}px`
-      },
-      isInitial() {
-        return this.currentStatus === 'STATUS_INITIAL';
-      },
-      isSaving() {
-        return this.currentStatus === 'STATUS_SAVING';
-      },
-      isSuccess() {
-        return this.currentStatus === 'STATUS_SUCCESS';
-      },
-      isFailed() {
-        return this.currentStatus === 'STATUS_FAILED';
-      }
+    back() {
+      this.$router.push("/admin/users");
     },
-    methods: {
-      AvatarUrl() {
-        return ``;
-      },
-      callInput() {
-        this.$refs.fileInput.click();
-      },
-      clear() {
-        this.$refs.GeneralForm.clear()
-      },
-      edit() {
-        this.disabled = !this.disabled;
-      },
-      updateUser() {
-        let generalFormData = this.$refs.GeneralForm.form();
-        console.log('generalFormData', generalFormData);
-        if (generalFormData) {
-          return Api
-            .Users()
-            .update(this.User.id, generalFormData)
-            .then(res => {
-              this.url = `${Config.ApiUrl}/users/${this.User.id}/profile/avatar?access_token=${Api.Axios().Api.access_token}`;
-              this.User = res.data;
-              this.$notify({
-                type: 'success',
-                title: 'Success',
-                text: 'Profile has been updated!'
-              });
-            })
-            .catch(error => {
-              console.log('error', error);
-              this.$notify({
-                type: 'error',
-                title: error.title,
-                text: error.message
-              });
-            });
-        }
-      },
-      getUser() {
-        return Api
-          .Users()
-          .get(this.User.id)
-          .then(res => {
-            this.User = res.data
-          })
-          .catch(error => {
-            console.log('error', error);
-            this.$notify({
-              type: 'error',
-              title: error.title,
-              text: error.message
-            });
+    save(formData) {
+      // upload data to the server
+      this.currentStatus = "STATUS_SAVING";
+      return ApiService.Users.uploadAvatar(this.User.id, formData)
+        .then(x => {
+          this.uploadedFiles = [].concat(x);
+          this.currentStatus = "STATUS_SUCCESS";
+          this.url = "";
+          return setTimeout(() => {
+            this.url = `${Config.ApiUrl}/users/${
+              this.User.id
+            }/profile/avatar?access_token=${Api.Axios().Api.access_token}`;
+          }, 100);
+        })
+        .catch(err => {
+          this.uploadError = err.response;
+          this.currentStatus = "STATUS_FAILED";
+          this.$notify({
+            type: "error",
+            title: error.title,
+            text: error.message
           });
-      },
-      back() {
-        this.$router.push('/admin/users');
-      },
-      save(formData) {
-        // upload data to the server
-        this.currentStatus = 'STATUS_SAVING';
-        return Api
-          .Users()
-          .uploadAvatar(this.User.id, formData)
-          .then(x => {
-            this.uploadedFiles = [].concat(x);
-            this.currentStatus = 'STATUS_SUCCESS';
-            this.url = '';
-            return setTimeout(() => {
-              this.url = `${Config.ApiUrl}/users/${this.User.id}/profile/avatar?access_token=${Api.Axios().Api.access_token}`;
-            }, 100);
-          })
-          .catch(err => {
-            this.uploadError = err.response;
-            this.currentStatus = 'STATUS_FAILED';
-            this.$notify({
-              type: 'error',
-              title: error.title,
-              text: error.message
-            });
-          });
-      },
-      filesChange(fieldName, fileList) {
-        // handle file changes
-        const formData = new FormData();
-        if (!fileList.length) return;
-        // append the files to FormData
-        Array
-          .from(Array(fileList.length).keys())
-          .map(x => {
-            formData.append(fieldName, fileList[x], fileList[x].name);
-          });
-        // save it
-        this.save(formData);
-      }
+        });
+    },
+    filesChange(fieldName, fileList) {
+      // handle file changes
+      const formData = new FormData();
+      if (!fileList.length) return;
+      // append the files to FormData
+      Array.from(Array(fileList.length).keys()).map(x => {
+        formData.append(fieldName, fileList[x], fileList[x].name);
+      });
+      // save it
+      this.save(formData);
     }
   }
+};
 </script>
 
 <style>
-  .uploader {
-    display: none;
-  }
+.uploader {
+  display: none;
+}
 </style>

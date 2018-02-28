@@ -118,7 +118,23 @@ export default {
           )
         ).then(res => {
           console.log("res", res);
-          this.$router.push(`/${this.workspace.name}/admin/users`);
+          let isAdmin = res.roles.indexOf("admins") !== -1;
+          let isStudent = res.roles.indexOf("students") !== -1;
+          let isLector = res.roles.indexOf("lectors") !== -1;
+          switch (true) {
+            case isAdmin:
+              return this.$router.push(`/${this.workspace.name}/admin/users`);
+              break;
+            case isLector:
+              return this.$router.push(`/${this.workspace.name}/lectors/users`);
+              break;
+            case isStudent:
+              return this.$router.push(`/${this.workspace.name}/student/users`);
+
+            default:
+              return this.$router.push(`/sign-in`);
+              break;
+          }
         });
       }
     }
@@ -180,7 +196,7 @@ export default {
 .workspace-logo {
   margin-top: 1vh !important;
   margin: 0 auto;
-  display: block;
+  display: block !important;
   visibility: hidden;
 }
 

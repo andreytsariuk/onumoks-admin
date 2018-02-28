@@ -11,7 +11,7 @@ import './stylus/main.styl';
 //----------------------CSS__INCLUDES------------
 import '../static/css/MaterialIcons.css';
 import colors from 'vuetify/es5/util/colors'
-
+import { AuthService } from './services';
 
 Vue.use(VueCookie);
 Vue.use(Notifications);
@@ -26,22 +26,22 @@ Vue.use(Vuetify, {
   lighten: colors.grey.lighten4,
   'font-family': 'Oswald'
 })
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+
+
 router.beforeEach((route, redirect, next) => {
 
-  function handleAuth(token) {
+  function handleAuth() {
 
-    if (token != null && token != '')
+    if (AuthService.checkLogin())
       return next();
-    //else
-    // return next('/sign-in');
+    else
+      return next('/sign-in');
   }
   if (route.matched.some(record => record.meta.auth)) {
-    router.app.$cookie.set('moks', 'bla');
-    var token = router.app.$cookie.get('moks');
 
-    console.log('token', token);
-    return handleAuth(token);
+    return handleAuth();
   } else {
     return next();
   }

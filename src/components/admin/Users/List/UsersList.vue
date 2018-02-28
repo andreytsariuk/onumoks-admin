@@ -46,7 +46,7 @@
                                  <td class="text-xs-center">{{ props.item.profile.fname }}</td>
                                  <td class="text-xs-center">{{ props.item.profile.lname }}</td>
                                  <td class="text-xs-center">{{ props.item.phone }}</td>
-                                 <td class="text-xs-center">{{ props.item.roles }}</td>
+                                 <td class="text-xs-center">{{ formatRoles(props.item.short_roles) }}</td>
                                 <td class="text-xs-center">
                                     <span class="group pa-2">
                                      <!-- <v-icon>home</v-icon> -->
@@ -75,111 +75,104 @@
 
 
 <script>
-import { Api } from '../../../../services';
-import _ from 'lodash';
-import UsersInfo from '../Info/UsersInfo.vue';
+import { ApiService } from "../../../../services";
+import _ from "lodash";
+import UsersInfo from "../Info/UsersInfo.vue";
 export default {
-    data() {
-        return {
-            search: '',
-            totalItems: 0,
-            items: [],
-            selected: [],
-            loading: true,
-            selectedUser:false,
-            pagination: {
-
-            },
-            headers: [
-                {
-                    text: 'id',
-                    align: 'center',
-                    sortable: false,
-                    value: 'id'
-                },
-                { text: 'E-mail', align: 'center', value: 'calories' },
-                { text: 'First Name', align: 'center', value: 'firstName' },
-                { text: 'Last Name', align: 'center', value: 'lasttName' },
-                { text: 'Phone Number', align: 'center', value: 'phone' },
-                { text: 'Role (s)', align: 'center', value: 'roles' },
-                { text: 'Actions', align: 'center', sortable: false, value: 'action' }
-
-            ]
-        }
-    },
-    components:{
-        'Info':UsersInfo
-    },
-    watch: {
-        pagination: {
-            handler(newValue, oldValue) {
-                if (!oldValue.page)
-                    return;
-
-                this.getDataFromApi()
-                    .then(data => {
-                        this.items = data.items
-                        this.totalItems = data.total
-                    })
-            },
-            deep: true
-        }
-    },
-    mounted() {
-         this.getDataFromApi()
-             .then(data => {
-                 console.log('data', data);
-                 this.items = data.items
-                 this.totalItems = data.total
-             })
-    },
-    methods: {
-        toggleAll() {
-            if (this.selected.length) this.selected = []
-            else this.selected = this.items.slice()
+  data() {
+    return {
+      search: "",
+      totalItems: 0,
+      items: [],
+      selected: [],
+      loading: true,
+      selectedUser: false,
+      pagination: {},
+      _: _,
+      headers: [
+        {
+          text: "id",
+          align: "center",
+          sortable: false,
+          value: "id"
         },
-        changeSort(column) {
-            if (this.pagination.sortBy === column) {
-                this.pagination.descending = !this.pagination.descending
-            } else {
-                this.pagination.sortBy = column
-                this.pagination.descending = false
-            }
-        },
-        showUser(userId){
-            console.log('showUser')
-           this.selectedUser =userId; 
-           console.log('selectedUser',this.selectedUser)
-        },
-        getDataFromApi() {
-            this.loading = true
-
-            return Api.Users()
-                .list(this.pagination)
-                .then(res => {
-                    this.loading = false;
-                    this.items = res.data.items;
-                    res.data.items = _.map(res.data.items, user => { user.roles = _.join(user.roles, ', '); return user });
-                    return res.data;
-                })
-                .catch(err => {
-                    this.loading = false;
-                    this.items = [];
-                    return [];
-                });
-
-        }
+        { text: "E-mail", align: "center", value: "calories" },
+        { text: "First Name", align: "center", value: "firstName" },
+        { text: "Last Name", align: "center", value: "lasttName" },
+        { text: "Phone Number", align: "center", value: "phone" },
+        { text: "Role (s)", align: "center", value: "roles" },
+        { text: "Actions", align: "center", sortable: false, value: "action" }
+      ]
+    };
+  },
+  components: {
+    Info: UsersInfo
+  },
+  watch: {
+    pagination: {
+      handler(newValue, oldValue) {
+        if (!oldValue.page) return;
+        this.getDataFromApi().then(data => {
+          this.items = data.items;
+          this.totalItems = data.total;
+        });
+      },
+      deep: true
     }
-}
+  },
+  mounted() {
+    this.getDataFromApi().then(data => {
+      console.log("data", data);
+      this.items = data.items;
+      this.totalItems = data.total;
+    });
+  },
+  methods: {
+    formatRoles(roles) {
+      return _.join(roles, ",");
+    },
+    toggleAll() {
+      if (this.selected.length) this.selected = [];
+      else this.selected = this.items.slice();
+    },
+    changeSort(column) {
+      if (this.pagination.sortBy === column) {
+        this.pagination.descending = !this.pagination.descending;
+      } else {
+        this.pagination.sortBy = column;
+        this.pagination.descending = false;
+      }
+    },
+    showUser(userId) {
+      console.log("showUser");
+      this.selectedUser = userId;
+      console.log("selectedUser", this.selectedUser);
+    },
+    getDataFromApi() {
+      this.loading = true;
 
+      return ApiService.Users.list(this.pagination)
+        .then(res => {
+          this.loading = false;
+          this.items = res.items;
+          //   this.pagination = res.pagination;
+          return res.data;
+        })
+        .catch(err => {
+          this.loading = false;
+          this.items = [];
+          return [];
+        });
+    }
+  }
+};
 </script>
 
 <style scoped>
-.resize{
-     -webkit-transition:width 300ms ease-in-out, height 300ms ease-in-out;
-    -moz-transition:width 300ms ease-in-out, height 300ms ease-in-out;
-    -o-transition:width 300ms ease-in-out, height 300ms ease-in-out;
-    transition:width 300ms ease-in-out, height 300ms ease-in-out;
+.resize {
+  -webkit-transition: width 300ms ease-in-out, height 300ms ease-in-out;
+  -moz-transition: width 300ms ease-in-out, height 300ms ease-in-out;
+  -o-transition: width 300ms ease-in-out, height 300ms ease-in-out;
+  transition: width 300ms ease-in-out, height 300ms ease-in-out;
 }
-
 </style>
