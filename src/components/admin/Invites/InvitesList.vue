@@ -7,14 +7,12 @@
             <v-flex xs12 class="padding elevation-0">
                 <v-card class=" white--text ">
                     <v-card-title>
-                       <h4> Users </h4>
+                       <h4> Invites </h4>
                         <v-spacer></v-spacer>
-                        <v-text-field append-icon="search" label="Search by E-mail" single-line hide-details v-model="search"></v-text-field>
+                        <v-text-field  color="white" append-icon="search" label="Search by E-mail" single-line hide-details v-model="search"></v-text-field>
                     </v-card-title>
-                     <v-card-actions>
-                        <v-btn flat  >
-                                        <v-icon>create</v-icon>                            
-                           </v-btn>
+                        <v-card-actions>
+                        <router-link :to="'invites/create'"> <v-icon color="primary">create</v-icon></router-link>                   
                         <!-- <v-btn flat class="orange--text">Explore</v-btn> -->
                     </v-card-actions>
                 </v-card>
@@ -37,25 +35,21 @@
                      </template>
                       
                         <template slot="items" scope="props" >
-                             <tr :active="props.selected" @click="showUser(props.item.id)">
+                             <tr :active="props.selected" @click="">
                                    <td @click="props.selected = !props.selected">
                                      <v-checkbox primary hide-details :input-value="props.selected"></v-checkbox>
                                  </td>
                                  <td class="text-xs-center">{{ props.item.id }}</td>
                                  <td class="text-xs-center">{{ props.item.email }}</td>
-                                 <td class="text-xs-center">{{ props.item.profile.fname }}</td>
-                                 <td class="text-xs-center">{{ props.item.profile.lname }}</td>
-                                 <td class="text-xs-center">{{ props.item.phone }}</td>
-                                 <td class="text-xs-center">{{ formatRoles(props.item.short_roles) }}</td>
+                                 <td class="text-xs-center">{{ props.item.user ?props.item.user.name:'-' }}</td>
+                                 <td class="text-xs-center">{{ props.item.token }}</td>
+                                 <td class="text-xs-center">{{ props.item.created_at }}</td>
                                 <td class="text-xs-center">
                                     <span class="group pa-2">
                                      <!-- <v-icon>home</v-icon> -->
                                      <!-- <v-icon>event</v-icon> -->
-                                     <router-link :to="`users/${props.item.id}`"> <v-icon>info</v-icon></router-link> 
+                                     <router-link :to="`specialties/${props.item.id}`"> <v-icon>info</v-icon></router-link> 
                                     </span>
-
-                                   
-                                    
                                 </td>
                              </tr> 
                         </template>
@@ -74,10 +68,10 @@
 
 
 
-<script>
-import { ApiService } from "../../../../services";
+<script >
+import { ApiService } from "../../../services";
+
 import _ from "lodash";
-import UsersInfo from "../Info/UsersInfo.vue";
 export default {
   data() {
     return {
@@ -88,7 +82,6 @@ export default {
       loading: true,
       selectedUser: false,
       pagination: {},
-      _: _,
       headers: [
         {
           text: "id",
@@ -96,22 +89,19 @@ export default {
           sortable: false,
           value: "id"
         },
-        { text: "E-mail", align: "center", value: "calories" },
-        { text: "First Name", align: "center", value: "firstName" },
-        { text: "Last Name", align: "center", value: "lasttName" },
-        { text: "Phone Number", align: "center", value: "phone" },
-        { text: "Role (s)", align: "center", value: "roles" },
-        { text: "Actions", align: "center", sortable: false, value: "action" }
+        { text: "E-mail", align: "center", value: "email" },
+        { text: "User", align: "center", value: "user" },
+        { text: "Token", align: "center", value: "token" },
+        { text: "Created", align: "center", value: "created_at" }
       ]
     };
   },
-  components: {
-    Info: UsersInfo
-  },
+  components: {},
   watch: {
     pagination: {
       handler(newValue, oldValue) {
         if (!oldValue.page) return;
+
         this.getDataFromApi().then(data => {
           this.items = data.items;
           this.totalItems = data.total;
@@ -123,14 +113,11 @@ export default {
   mounted() {
     this.getDataFromApi().then(data => {
       console.log("data", data);
-      this.items = data.items;
-      this.totalItems = data.total;
+      this.items = data;
+      this.totalItems = data.length;
     });
   },
   methods: {
-    formatRoles(roles) {
-      return _.join(roles, ",");
-    },
     toggleAll() {
       if (this.selected.length) this.selected = [];
       else this.selected = this.items.slice();
@@ -143,20 +130,16 @@ export default {
         this.pagination.descending = false;
       }
     },
-    showUser(userId) {
-      console.log("showUser");
-      this.selectedUser = userId;
-      console.log("selectedUser", this.selectedUser);
-    },
     getDataFromApi() {
       this.loading = true;
 
-      return ApiService.Users.list(this.pagination)
+      return ApiService.Invites.list(this.pagination)
         .then(res => {
+          console.log("res", res);
           this.loading = false;
-          this.items = res.items;
-          //   this.pagination = res.pagination;
-          return res.items;
+          this.items = res.data;
+
+          return res.data;
         })
         .catch(err => {
           this.loading = false;

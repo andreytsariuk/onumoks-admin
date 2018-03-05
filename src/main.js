@@ -32,16 +32,23 @@ Vue.config.productionTip = false;
 
 router.beforeEach((route, redirect, next) => {
 
-  function handleAuth() {
 
-    if (AuthService.checkLogin())
-      return next();
-    else
-      return next('/sign-in');
-  }
+  console.log('route.matched', route.matched.some(record => record.meta.roles))
+
+
+
   if (route.matched.some(record => record.meta.auth)) {
 
-    return handleAuth();
+    if (AuthService.checkLogin())
+      if (route.matched.some(record => record.meta.roles))
+        if (AuthService.checkRoles())
+          return next();
+        else
+          return next('/sign-in');
+      else
+        return next();
+    else return next('/sign-in');
+
   } else {
     return next();
   }

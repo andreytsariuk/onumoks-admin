@@ -118,9 +118,9 @@ export default {
           )
         ).then(res => {
           console.log("res", res);
-          let isAdmin = res.roles.indexOf("admins") !== -1;
-          let isStudent = res.roles.indexOf("students") !== -1;
-          let isLector = res.roles.indexOf("lectors") !== -1;
+          let isAdmin = res.user.short_roles.indexOf("admins") !== -1;
+          let isStudent = res.user.short_roles.indexOf("students") !== -1;
+          let isLector = res.user.short_roles.indexOf("lectors") !== -1;
           switch (true) {
             case isAdmin:
               return this.$router.push(`/${this.workspace.name}/admin/users`);

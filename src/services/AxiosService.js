@@ -2,12 +2,13 @@ import axios from "axios";
 import Middlewares from "../middleware";
 import cookie from "js-cookie";
 import { ErrorsService } from "./errors.service";
+import { AuthService } from './auth.service'
 
 export default class AxiosApiService {
   constructor(url) {
     this.url = url;
 
-    let token = this.access_token;
+    let token = AuthService.getToken();
     if (token && token !== null) {
       this.setToken(token);
     } else {
@@ -23,7 +24,7 @@ export default class AxiosApiService {
   }
 
   setToken(token) {
-    cookie.set("token", token);
+
     this.axios = axios.create({
       baseURL: this.url,
       timeout: 3000,
@@ -52,8 +53,8 @@ export default class AxiosApiService {
   }
 
   get access_token() {
-    let token = cookie.get("token");
-    console.log("token", token);
-    return token;
+
+
+    return '';
   }
 }

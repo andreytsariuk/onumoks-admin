@@ -4,6 +4,7 @@ import Books from '../components/admin/Books';
 import Specialties from '../components/admin/Specialties';
 import Cources from '../components/admin/Cources';
 import Students from '../components/admin/Students';
+import Invites from '../components/admin/Invites';
 
 export const AdminRoutes = [
 
@@ -100,6 +101,21 @@ export const AdminRoutes = [
     {
         path: 'courses/:id',
         component: Cources.Info
-    }
+    },
+    //-------------------Invites-------------------------------
+    {
+
+        path: 'invites',
+        component: Invites.List
+
+    },
+    {
+        path: 'invites/create',
+        component: Invites.Create
+    },
+    // {
+    //     path: 'invites/:id',
+    //     component: Cources.Info
+    // }
 
 ]

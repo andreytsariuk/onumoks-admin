@@ -3,6 +3,7 @@ export const Rules = {
         (v) => !!v || 'Name is required',
         (v) => v !== null && v.length <= 20 || 'Name must be less than 20 characters'
     ],
+
     ageRules: [
         (v) => !!v || 'Age is required'
     ],
@@ -30,6 +31,12 @@ export const Rules = {
     ],
     requiredPasswordRules: [
         (v) => !!v || 'Password is required',
-       // (v) => v !== null && v.length <= 20 || 'Password must be less than 20 characters'
+        // (v) => v !== null && v.length <= 20 || 'Password must be less than 20 characters'
+    ],
+    requiredDateRules: [
+        (v) => !!v || 'Date is required'
+    ],
+    requiredRolesRules: [
+        (v) => !!v || 'Role is required'
     ]
 }

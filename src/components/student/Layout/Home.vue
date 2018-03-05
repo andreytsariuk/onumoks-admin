@@ -15,31 +15,33 @@
             </v-content>
         </main>
         <v-footer app fixed>
-            <span>&copy; 2017</span>
+            <span>&copy; 2018</span>
         </v-footer>
     </v-app>
 </template>
 
 <script>
-    import SideBar from './SideBar'
-    export default {
-        data: () => ({
-            clipped: true,
-            drawer: true,
-            fixed: true,
-            items: [{
-                icon: 'bubble_chart',
-                title: 'Inspire'
-            }],
-            miniVariant: false,
-            right: true,
-            rightDrawer: false,
-            title: 'MOKS'
-        }),
-        components: {
-            SideBar
-        }
-    }
+import SideBar from "./SideBar";
+export default {
+  data: () => ({
+    clipped: true,
+    drawer: true,
+    fixed: true,
+    items: [
+      {
+        icon: "bubble_chart",
+        title: "Inspire"
+      }
+    ],
+    miniVariant: false,
+    right: true,
+    rightDrawer: false,
+    title: "MOKS"
+  }),
+  components: {
+    SideBar
+  }
+};
 </script>
 
 <style scoped>

@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import { AdminRoutes } from './admin.router'
 import { StudentRoutes } from './student.router'
 
-import AdminHome from '@/components/admin/Home';
+import AdminHome from '@/components/admin/Layout/Home';
 import StudentHome from '@/components/student/Layout/Home';
 import WorkscpaceLayout from '@/components/workspace/Layout/Layout';
 import LandingPage from '@/components/workspace/Landing/Landing';
@@ -44,6 +44,7 @@ export default new Router({
           component: AdminHome,
           children: AdminRoutes,
           meta: {
+            roles: ['admins'],
             auth: true
           }
         },
