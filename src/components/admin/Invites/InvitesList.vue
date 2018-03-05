@@ -100,21 +100,20 @@ export default {
   watch: {
     pagination: {
       handler(newValue, oldValue) {
-        if (!oldValue.page) return;
+        if (!oldValue.page && newValue.page !== oldValue.page) return;
 
-        this.getDataFromApi().then(data => {
-          this.items = data.items;
-          this.totalItems = data.total;
+        this.getDataFromApi().then(res => {
+          this.items = res.data;
+          this.totalItems = res.pagination.rowCount;
         });
       },
       deep: true
     }
   },
   mounted() {
-    this.getDataFromApi().then(data => {
-      console.log("data", data);
-      this.items = data;
-      this.totalItems = data.length;
+    this.getDataFromApi().then(res => {
+      this.items = res.data;
+      this.totalItems = res.pagination.rowCount;
     });
   },
   methods: {
@@ -139,7 +138,7 @@ export default {
           this.loading = false;
           this.items = res.data;
 
-          return res.data;
+          return res;
         })
         .catch(err => {
           this.loading = false;
