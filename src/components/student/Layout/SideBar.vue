@@ -26,24 +26,26 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                items: [{
-                        icon: 'dashboard',
-                        title: 'Schedule',
-                        link: '/student/schedule'
-                    }
-                ],
-            }
-        },
-        methods: {
-            navigate(item) {
-                if (!item.items)
-                    this.$router.push(item.link);
-            }
+import { AuthService } from "../../../services";
+export default {
+  data() {
+    return {
+      items: [
+        {
+          icon: "dashboard",
+          title: "Schedule",
+          link: "/student/schedule"
         }
+      ]
+    };
+  },
+  methods: {
+    navigate(item) {
+      if (!item.items)
+        this.$router.push(`/${AuthService.Workspace().name}${item.link}`);
     }
+  }
+};
 </script>
 
 

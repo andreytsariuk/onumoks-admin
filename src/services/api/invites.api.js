@@ -10,7 +10,9 @@ export class Invites {
         return Axios.Api.post(`/v1/admin/invites`, inviteData);
     }
 
-    static get(userId) {
-        return Axios.Api.get(`/v1/users/${userId}`);
+    static get(params) {
+        return Axios.Server.get(`public/v1/invites`, {
+            params
+        });
     }
 }

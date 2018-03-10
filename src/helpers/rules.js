@@ -33,6 +33,11 @@ export const Rules = {
         (v) => !!v || 'Password is required',
         // (v) => v !== null && v.length <= 20 || 'Password must be less than 20 characters'
     ],
+    requiredRepeatPasswordRules: (pass) => ([
+        (v) => !!v || 'Password is required',
+        (v) => pass === v || 'Both Passworts must matched'
+        // (v) => v !== null && v.length <= 20 || 'Password must be less than 20 characters'
+    ]),
     requiredDateRules: [
         (v) => !!v || 'Date is required'
     ],

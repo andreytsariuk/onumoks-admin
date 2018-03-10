@@ -9,4 +9,7 @@ export class Auth {
   static signIn(signInData) {
     return Axios.Server.post(`/auth/v1/user`, signInData).then(AuthService.setLogin);
   }
+  static signUp(signInData, workspace_name, invite_token) {
+    return Axios.Server.post(`/auth/v1/sign-up/${workspace_name}/invite/${invite_token}`, signInData).then(AuthService.setLogin);
+  }
 }

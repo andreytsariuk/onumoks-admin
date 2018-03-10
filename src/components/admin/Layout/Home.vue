@@ -17,8 +17,8 @@
            <v-avatar :tile="false" :size="36"  color="secondry">
                   <img  class="teal lighten-1" src="workspace.avatar.publicPath" alt="">
                 </v-avatar>
-                 Name
-                  Name
+                 {{user.profile.fname}}
+                {{user.profile.lname}}
 
           </a>
 
@@ -29,8 +29,8 @@
             <v-icon >more_vert</v-icon>
           </v-btn>
           <v-list>
-        <v-list-tile v-for="item in items" :key="item.title" @click="">
-          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+        <v-list-tile  @click="logOut()">
+          <v-list-tile-title >Log Out</v-list-tile-title>
         </v-list-tile>
       </v-list>
        </v-menu>
@@ -47,12 +47,14 @@
 </template>
 
 <script>
+import { AuthService } from "../../../services";
 import SideBar from "./SideBar";
 export default {
   data: () => ({
     clipped: true,
     drawer: true,
     fixed: true,
+    user: { profile: {} },
     items: [
       {
         icon: "bubble_chart",
@@ -68,8 +70,17 @@ export default {
     rightDrawer: false,
     title: "MOKS"
   }),
+  mounted() {
+    this.user = AuthService.getUser();
+  },
   components: {
     SideBar
+  },
+  methods: {
+    logOut() {
+      AuthService.logOut();
+      this.$router.push("/sign-in");
+    }
   }
 };
 </script>

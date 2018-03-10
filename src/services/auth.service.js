@@ -36,6 +36,9 @@ export const AuthService = class {
     else
       return false;
   }
+  static getUser() {
+    return LocalStorageService.getJSON('user');
+  }
 
   static checkRoles(roles = []) {
     let userRoles = LocalStorageService.getJSON('roles');

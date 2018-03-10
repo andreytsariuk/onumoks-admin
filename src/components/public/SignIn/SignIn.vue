@@ -2,7 +2,7 @@
   <v-layout class="background background-1" dark>
     <div class="bacground-muted">
       <div class="logo-container">
-        <h1 class="project-logo">inStudy</h1>
+       <img class="logo" src="https://instudy-backend.herokuapp.com/static/img/InStudyLogo_white.png" alt="">
       </div>
   
       <div class="login-layout">
@@ -65,6 +65,7 @@
 import { Api, ApiService } from "../../../services";
 import jwt_decode from "jwt-decode";
 import SignInForm from "./SignInForm.vue";
+import { routeAfterSignIn } from "../../../helpers";
 export default {
   name: "hello",
   data() {
@@ -116,26 +117,7 @@ export default {
             },
             signInData
           )
-        ).then(res => {
-          console.log("res", res);
-          let isAdmin = res.user.short_roles.indexOf("admins") !== -1;
-          let isStudent = res.user.short_roles.indexOf("students") !== -1;
-          let isLector = res.user.short_roles.indexOf("lectors") !== -1;
-          switch (true) {
-            case isAdmin:
-              return this.$router.push(`/${this.workspace.name}/admin/users`);
-              break;
-            case isLector:
-              return this.$router.push(`/${this.workspace.name}/lectors/users`);
-              break;
-            case isStudent:
-              return this.$router.push(`/${this.workspace.name}/student/users`);
-
-            default:
-              return this.$router.push(`/sign-in`);
-              break;
-          }
-        });
+        ).then(res => routeAfterSignIn(res, this.$router, this.workspace.name));
       }
     }
   }
@@ -145,8 +127,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .logo-container {
-  padding-top: 10vh;
   text-align: center;
+}
+.logo {
+  max-width: 300px;
 }
 
 .project-logo {
@@ -186,6 +170,7 @@ export default {
 .login-layout {
   padding-left: 30%;
   padding-right: 30%;
+  padding-bottom: 50px;
 }
 
 .rounded {
@@ -221,7 +206,6 @@ export default {
     padding-top: 10vh;
     padding-left: 10px;
     padding-right: 10px;
-    padding-bottom: 10px;
   }
 }
 </style>

@@ -9,7 +9,9 @@ import WorkscpaceLayout from '@/components/workspace/Layout/Layout';
 import LandingPage from '@/components/workspace/Landing/Landing';
 
 
-import SignIn from '@/components/public/SignIn/SignIn.vue'
+import SignIn from '@/components/public/SignIn/SignIn.vue';
+import SignUpInvite from '@/components/public/SignUp/SignUpInvite.vue';
+
 
 
 Vue.use(Router)
@@ -56,6 +58,11 @@ export default new Router({
           meta: {
             auth: true
           }
+        },
+        {
+          path: 'sign-up/invite',
+          name: 'SignUpInvite',
+          component: SignUpInvite
         },
 
 
