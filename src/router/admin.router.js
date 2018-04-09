@@ -5,6 +5,7 @@ import Specialties from '../components/admin/Specialties';
 import Cources from '../components/admin/Cources';
 import Students from '../components/admin/Students';
 import Invites from '../components/admin/Invites';
+import Files from '../components/admin/Files';
 
 export const AdminRoutes = [
 
@@ -117,5 +118,10 @@ export const AdminRoutes = [
     //     path: 'invites/:id',
     //     component: Cources.Info
     // }
+    //-------------------Files-------------------------------
+    {
+        path: 'files',
+        component: Files.List
+    }
 
 ]

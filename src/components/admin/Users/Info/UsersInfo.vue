@@ -1,20 +1,20 @@
 
 <template>
-  <v-layout row>
-    <v-flex sm6 xs12>
+  <v-layout row wrap>
+    <v-flex lg6 md6 sm6 xs12 class="padding">
       <v-card>
-        <v-toolbar class="teal" dark>
+        <v-toolbar class="teal " dark>
           <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
           <v-btn @click="back()" dark icon>
             <v-icon>chevron_left</v-icon>
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn @click="callInput" dark icon class="mr-3">
-            <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" ref="fileInput" accept="image/*" class="uploader">
+            <input type="file" multiple :name="uploadFieldName" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" ref="fileInput" accept="image/*" class="uploader">
             <v-icon>add_a_photo</v-icon>
           </v-btn>
         </v-toolbar>
-        <v-card-media :src="url" height="300px">
+        <v-card-media :src="avatarPath" height="240px">
           <v-layout column class="media">
             <v-spacer></v-spacer>
             <v-card-title class="white--text pl-5 pt-5">
@@ -24,20 +24,22 @@
         </v-card-media>
         <UserForm :disabled="disabled" ref="GeneralForm" :profile="User.profile"> </UserForm>
         <v-card-actions>
-          <v-btn v-if="!disabled" icon @click="updateUser">
+          <v-btn v-if="!disabled" @click="updateUser">
             <v-icon>done</v-icon>
           </v-btn>
-          <v-btn v-if="!disabled" icon @click="clear">
+          <v-btn v-if="!disabled" @click="clear">
             <v-icon>highlight_off</v-icon>
           </v-btn>
-          <v-btn v-if="disabled" icon @click="edit">
+          <v-btn v-if="disabled" @click="edit">
             <v-icon>create</v-icon>
           </v-btn>
           <!-- <v-btn flat class="orange--text">Explore</v-btn> -->
         </v-card-actions>
       </v-card>
     </v-flex>
-    <UserSettings></UserSettings>
+    <v-flex lg6 md6 sm6 xs12 class="padding">
+      <UserSettings></UserSettings>
+    </v-flex>
   </v-layout>
 </template>
 
@@ -58,53 +60,17 @@ export default {
     return {
       ApiUrl: Config.ApiUrl,
       slider: 56,
-      tile: false,
-      nameRules: [
-        v => !!v || "Name is required",
-        v =>
-          (v !== null && v.length <= 10) ||
-          "Name must be less than 10 characters"
-      ],
-      emailRules: [
-        v => {
-          console.log("v", v);
-          console.log(
-            "test",
-            !v ||
-              /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-              "E-mail must be valid"
-          );
-          return (
-            !v ||
-            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-            "E-mail must be valid"
-          );
-        }
-      ],
-      requiredEmailRules: [
-        v => !!v || "E-mail is required",
-        v =>
-          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-          "E-mail must be valid"
-      ],
-      phoneRules: [
-        v => !!v || "Phone Number is required",
-        v =>
-          /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(v) ||
-          "Phone number must be valid"
-      ],
       personal_email: "",
       User: {
         personal_email: "",
-        profile: {}
+        profile: {
+          avatar: {}
+        }
       },
       valid: false,
-      url: "",
-      uploadedFiles: [],
-      uploadError: null,
-      currentStatus: null,
       uploadFieldName: "avatar",
-      disabled: true
+      disabled: true,
+      loading: false
     };
   },
   components: {
@@ -113,15 +79,9 @@ export default {
   },
   created() {
     this.User.id = this.userId ? this.userId : this.$route.params.id;
-    return ApiService.Users.get(this.User.id)
-      .then(user => {
-        this.url = `${Config.ApiUrl}/users/${
-          this.User.id
-        }/profile/avatar?access_token=${AuthService.getToken()}`;
-        this.User = user;
-      })
+    return ApiService.AdminApi.Users.get(this.User.id)
+      .then(user => (this.User = user))
       .catch(error => {
-        console.log("error", error);
         this.$notify({
           type: "error",
           title: error.title,
@@ -130,25 +90,17 @@ export default {
       });
   },
   computed: {
-    avatarSize() {
-      return `${this.slider}px`;
-    },
-    isInitial() {
-      return this.currentStatus === "STATUS_INITIAL";
-    },
-    isSaving() {
-      return this.currentStatus === "STATUS_SAVING";
-    },
-    isSuccess() {
-      return this.currentStatus === "STATUS_SUCCESS";
-    },
-    isFailed() {
-      return this.currentStatus === "STATUS_FAILED";
+    avatarPath() {
+      return this.User.profile && this.User.profile.avatar
+        ? this.User.profile.avatar.publicPath
+        : "";
     }
   },
   methods: {
     AvatarUrl() {
-      return ``;
+      return this.User.profile && this.User.profile.avatar
+        ? this.User.profile.avatar.publicPath
+        : "";
     },
     callInput() {
       this.$refs.fileInput.click();
@@ -160,15 +112,14 @@ export default {
       this.disabled = !this.disabled;
     },
     updateUser() {
+      this.loading = true;
+
       let generalFormData = this.$refs.GeneralForm.form();
       console.log("generalFormData", generalFormData);
       if (generalFormData) {
-        return ApiService.Users.update(this.User.id, generalFormData)
+        return ApiService.AdminApi.Users.update(this.User.id, generalFormData)
           .then(res => {
-            this.url = `${Config.ApiUrl}/users/${
-              this.User.id
-            }/profile/avatar?access_token=${Api.Axios().Api.access_token}`;
-            this.User = res.data;
+            this.User = res;
             this.$notify({
               type: "success",
               title: "Success",
@@ -176,7 +127,6 @@ export default {
             });
           })
           .catch(error => {
-            console.log("error", error);
             this.$notify({
               type: "error",
               title: error.title,
@@ -185,40 +135,21 @@ export default {
           });
       }
     },
-    getUser() {
-      return ApiService.Users.get(this.User.id)
-        .then(res => {
-          this.User = res.data;
-        })
-        .catch(error => {
-          console.log("error", error);
-          this.$notify({
-            type: "error",
-            title: error.title,
-            text: error.message
-          });
-        });
-    },
     back() {
-      this.$router.push("/admin/users");
+      this.$router.go(-1);
     },
     save(formData) {
       // upload data to the server
-      this.currentStatus = "STATUS_SAVING";
-      return ApiService.Users.uploadAvatar(this.User.id, formData)
-        .then(x => {
-          this.uploadedFiles = [].concat(x);
-          this.currentStatus = "STATUS_SUCCESS";
-          this.url = "";
-          return setTimeout(() => {
-            this.url = `${Config.ApiUrl}/users/${
-              this.User.id
-            }/profile/avatar?access_token=${Api.Axios().Api.access_token}`;
-          }, 100);
+      return ApiService.AdminApi.Users.uploadAvatar(this.User.id, formData)
+        .then(res => {
+          this.User = res;
+          this.$notify({
+            type: "success",
+            title: "Success",
+            text: "Profile has been updated!"
+          });
         })
         .catch(err => {
-          this.uploadError = err.response;
-          this.currentStatus = "STATUS_FAILED";
           this.$notify({
             type: "error",
             title: error.title,
@@ -227,14 +158,12 @@ export default {
         });
     },
     filesChange(fieldName, fileList) {
-      // handle file changes
+      console.log(this.User);
       const formData = new FormData();
       if (!fileList.length) return;
-      // append the files to FormData
       Array.from(Array(fileList.length).keys()).map(x => {
         formData.append(fieldName, fileList[x], fileList[x].name);
       });
-      // save it
       this.save(formData);
     }
   }

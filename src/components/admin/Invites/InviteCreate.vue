@@ -1,16 +1,20 @@
 <template>
-    <div>
-        <v-card class="elevation-2">
-            <InvitesForm  ref="GeneralForm" :specialty="Invite"> </InvitesForm>
-            <v-card-actions>
-                <v-btn @click="back" flat>Back</v-btn>
-                <v-btn @click="create" flat>Create</v-btn>
-                <v-btn icon @click="clear">
-                    <v-icon>highlight_off</v-icon>
-                </v-btn>
-            </v-card-actions>
+  <div>
+    <v-layout row wrap>
+      <v-flex xs12 class="padding elevation-0">
+        <v-card class="elevation-2 padding">
+          <InvitesForm ref="GeneralForm" :specialty="Invite"> </InvitesForm>
+          <v-card-actions>
+            <v-btn @click="back" flat>Back</v-btn>
+            <v-btn @click="create" flat>Create</v-btn>
+            <v-btn icon @click="clear">
+              <v-icon>highlight_off</v-icon>
+            </v-btn>
+          </v-card-actions>
         </v-card>
-    </div>
+      </v-flex>
+    </v-layout>
+  </div>
 </template>
 
 <script>
@@ -54,7 +58,7 @@ export default {
     create() {
       let generalFormData = this.$refs.GeneralForm.form();
       if (generalFormData) {
-        return ApiService.Invites.create(generalFormData)
+        return ApiService.AdminApi.Invites.create(generalFormData)
           .then(res => (this.Specialty = res.data))
           .then(() =>
             this.$notify({
@@ -79,7 +83,5 @@ export default {
 </script>
 
 <style>
-.card {
-  margin: 5px !important;
-}
+
 </style>

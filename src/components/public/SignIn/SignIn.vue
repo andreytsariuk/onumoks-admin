@@ -63,6 +63,8 @@
 
 <script>
 import { Api, ApiService } from "../../../services";
+import run from "../../../services/test";
+
 import jwt_decode from "jwt-decode";
 import SignInForm from "./SignInForm.vue";
 import { routeAfterSignIn } from "../../../helpers";
@@ -91,6 +93,9 @@ export default {
       // @click.native="loader = 'loading3'" :disabled="loading3"
       this.loader = null;
     }
+  },
+  mounted() {
+    run(470, 2, 541);
   },
   methods: {
     submitWorkspace() {
@@ -125,7 +130,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
 .logo-container {
   text-align: center;
 }

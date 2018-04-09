@@ -8,21 +8,20 @@
                 <v-text-field :disabled="true" v-model="email" :rules="Rules.requiredEmailRules" required label="E-mail"></v-text-field>
             </v-flex>
         </v-layout>
-                <v-layout row>
+        <v-layout row>
             <v-flex xs4>
                 <v-subheader class="grey--text text--lighten-1">First Name</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-text-field :disabled="disabled" :rules="Rules.nameRules" name="input-1" label="First Name" v-model="fname" ></v-text-field>
+                <v-text-field :disabled="disabled" :rules="Rules.nameRules" name="input-1" label="First Name" v-model="fname"></v-text-field>
             </v-flex>
         </v-layout>
-         </v-layout>
-                <v-layout row>
+        <v-layout row>
             <v-flex xs4>
                 <v-subheader class="grey--text text--lighten-1">Last Name</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-text-field :disabled="disabled" :rules="Rules.nameRules" name="input-1" label="Last Name" v-model="lname" ></v-text-field>
+                <v-text-field :disabled="disabled" :rules="Rules.nameRules" name="input-1" label="Last Name" v-model="lname"></v-text-field>
             </v-flex>
         </v-layout>
         <v-layout row>
@@ -30,27 +29,25 @@
                 <v-subheader>Password</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-text-field name="input-10-1" label="Enter your password" hint="At least 8 characters" v-model="password" :append-icon="passwordVisibility ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (passwordVisibility = !passwordVisibility) " :type="passwordVisibility ? 'password' : 'text'"
-                    counter required :rules="Rules.requiredPasswordRules"></v-text-field>
+                <v-text-field name="input-10-1" label="Enter your password" hint="At least 8 characters" v-model="password" :append-icon="passwordVisibility ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (passwordVisibility = !passwordVisibility) " :type="passwordVisibility ? 'password' : 'text'" counter required :rules="Rules.requiredPasswordRules"></v-text-field>
             </v-flex>
         </v-layout>
-         <v-layout row>
+        <v-layout row>
             <v-flex xs4>
                 <v-subheader>Repeat Password </v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-text-field name="input-10-1" label="Enter your password" hint="At least 8 characters" v-model="repeatPassword" :append-icon="passwordVisibility ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (passwordVisibility = !passwordVisibility) " :type="passwordVisibility ? 'password' : 'text'"
-                    counter required :rules="Rules.requiredRepeatPasswordRules(password)"></v-text-field>
+                <v-text-field name="input-10-1" label="Enter your password" hint="At least 8 characters" v-model="repeatPassword" :append-icon="passwordVisibility ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (passwordVisibility = !passwordVisibility) " :type="passwordVisibility ? 'password' : 'text'" counter required :rules="Rules.requiredRepeatPasswordRules(password)"></v-text-field>
             </v-flex>
         </v-layout>
-                <v-layout row>
+        <v-layout row>
             <v-flex xs4>
                 <v-subheader>
                     <v-icon info>phone</v-icon>
                 </v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-text-field :disabled="disabled" v-model="work_phone" name="work_phone" required :rules="Rules.requiredPhoneRules " label="Work" ></v-text-field>
+                <v-text-field :disabled="disabled" v-model="work_phone" name="work_phone" required :rules="Rules.requiredPhoneRules " label="Work"></v-text-field>
             </v-flex>
         </v-layout>
         <!-- <v-layout row>
@@ -67,7 +64,7 @@
                 </v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-text-field :disabled="disabled" v-model="work_email" :rules="Rules.requiredEmailRules" required label="Work E-mail" ></v-text-field>
+                <v-text-field :disabled="disabled" v-model="work_email" :rules="Rules.requiredEmailRules" required label="Work E-mail"></v-text-field>
             </v-flex>
         </v-layout>
         <!-- <v-layout row>

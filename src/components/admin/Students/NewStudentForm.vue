@@ -1,43 +1,27 @@
 <template>
-    <v-form v-model="valid" ref="generalForm">
-
+    <v-form v-model="valid" ref="generalForm" class="padding" @submit.stop.prevent="submit()">
         <v-layout row>
             <v-flex xs4>
-                <v-subheader>User</v-subheader>
+                <v-subheader>E-mail</v-subheader>
             </v-flex>
-
             <v-flex xs8>
-                <v-select required label="User" :items="users" v-model="user" item-text="name" item-value="id" max-height="auto" autocomplete>
-                    <template slot="selection" slot-scope="data">
-                        <div v-if="data.item.profile && data.item.profile.avatar &&  data.item.profile.avatar.publicPath">
-                            <v-avatar :tile="false" :size="26" color="secondry">
-                                <img class="teal lighten-1" :src="data.item.profile.avatar.publicPath" alt="user avatar">
-                            </v-avatar>
-                        </div>
-                        <v-icon v-else medium color="primary">account_circle</v-icon>
-                        &nbsp; {{ data.item.name }}
-                    </template>
-                    <template slot="item" slot-scope="data">
-                        <template v-if="typeof data.item !== 'object'">
-                            <v-list-tile-content v-text="data.item"></v-list-tile-content>
-                        </template>
-                        <template v-else>
-                            <v-list-tile-avatar>
-                                <div v-if="data.item.profile && data.item.profile.avatar &&  data.item.profile.avatar.publicPath">
-                                    <v-avatar :tile="false" :size="36" color="secondry">
-                                        <img class="teal lighten-1" :src="data.item.profile.avatar.publicPath" alt="user avatar">
-                                    </v-avatar>
-                                </div>
-                                <v-icon v-else medium color="primary">account_circle</v-icon>
-                            </v-list-tile-avatar>
-
-                            <v-list-tile-content>
-                                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                                <v-list-tile-sub-title v-html="formatRoles(data.item.short_roles)"></v-list-tile-sub-title>
-                            </v-list-tile-content>
-                        </template>
-                    </template>
-                </v-select>
+                <v-text-field v-model="email" :rules="Rules.requiredEmailRules" required label="E-mail"></v-text-field>
+            </v-flex>
+        </v-layout>
+        <v-layout row>
+            <v-flex xs4>
+                <v-subheader>First Name</v-subheader>
+            </v-flex>
+            <v-flex xs8>
+                <v-text-field :disabled="disabled" :rules="Rules.nameRules" name="input-1" label="First Name" v-model="fname"></v-text-field>
+            </v-flex>
+        </v-layout>
+        <v-layout row>
+            <v-flex xs4>
+                <v-subheader>Last Name</v-subheader>
+            </v-flex>
+            <v-flex xs8>
+                <v-text-field :disabled="disabled" :rules="Rules.nameRules" name="input-1" label="Last Name" v-model="lname"></v-text-field>
             </v-flex>
         </v-layout>
         <v-layout row>
@@ -118,65 +102,39 @@
                 </v-select>
             </v-flex>
         </v-layout>
+        <v-btn class="submit-button" type="submit"></v-btn>
     </v-form>
 </template>
 
 
 <script>
-import Config from "../../../config";
 import { ApiService } from "../../../services";
+import Config from "../../../config";
 import { Rules } from "../../../helpers";
-import moment from "moment";
 import _ from "lodash";
 export default {
+  props: ["id", "disabled", "cource"],
   data() {
     return {
+      Rules: Rules,
       ApiUrl: Config.ApiUrl,
-      Rules,
       valid: false,
-      menu: false,
-      modal: false,
-      users: [],
+      passwordVisibility: true,
       specialties: [],
       courses: [],
       //------------Forms Params
-      user: null,
       specialty: null,
       course: null,
-      name: "",
       email: "",
-      role: "",
-      expires_at: moment()
-        .add(24, "hours")
-        .format("YYYY-MM-DD"),
-      roles: [
-        {
-          label: "Admin",
-          value: "admins"
-        },
-        {
-          label: "Student",
-          value: "students"
-        },
-        {
-          label: "Lector",
-          value: "lectors"
-        }
-      ]
+      fname: "",
+      lname: ""
     };
   },
   created() {
-    console.log("this.disabledss", this.disabled);
-    this.getUsers();
     this.getCourses();
     this.getSpecialties();
   },
   methods: {
-    getUsers() {
-      ApiService.AdminApi.Users.list().then(res => {
-        this.users = res.items;
-      });
-    },
     getCourses() {
       ApiService.AdminApi.Courses.list().then(res => {
         this.courses = res.items;
@@ -186,6 +144,24 @@ export default {
       ApiService.AdminApi.Specialties.list().then(res => {
         this.specialties = res.items;
       });
+    },
+    callInput() {
+      this.$refs.fileInput.click();
+    },
+    clear() {
+      this.$refs.generalForm.reset();
+    },
+    form() {
+      if (this.$refs.generalForm.validate()) {
+        return {
+          email: this.email,
+          password: this.password,
+          fname: this.fname,
+          lname: this.lname,
+          work_email: this.work_email,
+          work_phone: this.work_phone
+        };
+      }
     },
     formatRoles(rolesArray) {
       return _.join(rolesArray, ", ");
@@ -211,3 +187,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.submit-button {
+  visibility: hidden;
+}
+</style>

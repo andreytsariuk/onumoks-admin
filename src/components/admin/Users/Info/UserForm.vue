@@ -2,19 +2,33 @@
     <v-form v-model="valid" ref="generalForm">
         <v-layout row>
             <v-flex xs3>
-                <v-subheader>
-                    <v-icon info>phone</v-icon>
-                </v-subheader>
             </v-flex>
             <v-flex xs9>
-                <v-text-field :disabled="disabled" v-model="work_phone" name="work_phone" :rules="phoneRules" label="Work" ></v-text-field>
+                <v-text-field :disabled="disabled" :rules="Rules.nameRules" name="input-1" label="First Name" v-model="fname"></v-text-field>
             </v-flex>
         </v-layout>
         <v-layout row>
             <v-flex xs3>
             </v-flex>
             <v-flex xs9>
-                <v-text-field :disabled="disabled" v-model="personal_phone" :rules="requiredPhoneRules" required label="Mobile" ></v-text-field>
+                <v-text-field :disabled="disabled" :rules="Rules.nameRules" name="input-1" label="Last Name" v-model="lname"></v-text-field>
+            </v-flex>
+        </v-layout>
+        <v-layout row>
+            <v-flex xs3>
+                <v-subheader>
+                    <v-icon info>phone</v-icon>
+                </v-subheader>
+            </v-flex>
+            <v-flex xs9>
+                <v-text-field :disabled="disabled" v-model="Rules.work_phone" name="work_phone" :rules="Rules.phoneRules" label="Work"></v-text-field>
+            </v-flex>
+        </v-layout>
+        <v-layout row>
+            <v-flex xs3>
+            </v-flex>
+            <v-flex xs9>
+                <v-text-field :disabled="disabled" v-model="personal_phone" :rules="Rules.requiredPhoneRules " required label="Mobile"></v-text-field>
             </v-flex>
         </v-layout>
         <v-layout row>
@@ -24,14 +38,14 @@
                 </v-subheader>
             </v-flex>
             <v-flex xs9>
-                <v-text-field :disabled="disabled" v-model="work_email" :rules="emailRules" required label="Work E-mail" ></v-text-field>
+                <v-text-field :disabled="disabled" v-model="work_email" :rules="Rules.requiredEmailRules" required label="Work E-mail"></v-text-field>
             </v-flex>
         </v-layout>
         <v-layout row>
             <v-flex xs3>
             </v-flex>
             <v-flex xs9>
-                <v-text-field :disabled="disabled" v-model="personal_email" :rules="emailRules" label="Personal E-mail" ></v-text-field>
+                <v-text-field :disabled="disabled" v-model="personal_email" :rules="Rules.emailRules" label="Personal E-mail"></v-text-field>
             </v-flex>
         </v-layout>
     </v-form>
@@ -41,56 +55,17 @@
 <script>
 import Config from "../../../../config";
 import { Api } from "../../../../services";
+import { Rules } from "../../../../helpers";
 import _ from "lodash";
-///sdsds
+
 export default {
   props: ["userId", "disabled", "profile"],
   data() {
     return {
-      ApiUrl: Config.ApiUrl,
-      slider: 56,
-      tile: false,
-      nameRules: [
-        v => !!v || "Name is required",
-        v =>
-          (v !== null && v.length <= 10) ||
-          "Name must be less than 10 characters"
-      ],
-      emailRules: [
-        v =>
-          !v ||
-          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-          "E-mail must be valid"
-      ],
-      requiredEmailRules: [
-        v => !!v || "E-mail is required",
-        v =>
-          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-          "E-mail must be valid"
-      ],
-      requiredPhoneRules: [
-        v => !!v || "Phone Number is required",
-        v =>
-          /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(v) ||
-          "Phone number must be valid"
-      ],
-      phoneRules: [
-        v =>
-          !v ||
-          /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(v) ||
-          "Phone number must be valid"
-      ],
-      personal_email: "",
-      User: {
-        personal_email: "",
-        profile: {}
-      },
+      Rules: Rules,
       valid: false,
-      url: "",
-      uploadedFiles: [],
-      uploadError: null,
-      currentStatus: null,
-      uploadFieldName: "avatar",
+      fname: "",
+      lname: "",
       personal_phone: "",
       work_phone: "",
       personal_email: "",
@@ -102,6 +77,8 @@ export default {
   },
   watch: {
     profile: function(newProfile) {
+      console.log("Change");
+
       this.personal_phone = newProfile.personal_phone
         ? newProfile.personal_phone
         : "";
@@ -113,18 +90,14 @@ export default {
     }
   },
   methods: {
-    AvatarUrl() {
-      return ``;
-    },
-    callInput() {
-      this.$refs.fileInput.click();
-    },
     clear() {
       this.$refs.generalForm.reset();
     },
     form() {
       if (this.$refs.generalForm.validate()) {
         return {
+          fname: this.fname,
+          lname: this.lname,
           personal_phone: this.personal_phone,
           work_phone: this.work_phone,
           personal_email: this.personal_email,
