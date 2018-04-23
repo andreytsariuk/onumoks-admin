@@ -5,23 +5,23 @@
                 <v-card class="elevation-2 padding">
                     <v-tabs icons-and-text centered v-model="selectedForm">
                         <v-tabs-slider color="primary"></v-tabs-slider>
-                        <v-tab href="#tab-1">
+                        <v-tab href="#new">
                             new user
                             <v-icon color="primary">add</v-icon>
                         </v-tab>
-                        <v-tab href="#tab-2">
+                        <v-tab href="#exist">
                             Or Exists
                             <v-icon color="primary">check</v-icon>
                         </v-tab>
 
-                        <v-tab-item id="tab-1">
+                        <v-tab-item id="new">
                             <v-card flat>
                                 <NewStudentForm ref="GeneralFormNew"> </NewStudentForm>
                             </v-card>
                         </v-tab-item>
 
-                        <v-tab-item id="tab-2">
-                            <StudentsForm ref="GeneralForm"> </StudentsForm>
+                        <v-tab-item id="exist">
+                            <StudentsForm ref="GeneralFormExist"> </StudentsForm>
                         </v-tab-item>
                     </v-tabs>
 
@@ -78,29 +78,34 @@ export default {
       this.$router.go(-1);
     },
     clear() {
-      this.$refs.GeneralForm.clear();
+      if (this.selectedForm === "new") this.$refs.GeneralFormNew.clear();
+      else this.$refs.GeneralFormExist.clear();
     },
     create() {
-      let generalFormData = this.$refs.GeneralForm.form();
-      if (generalFormData) {
-        return ApiService.AdminApi.Invites.create(generalFormData)
-          .then(res => (this.Specialty = res.data))
-          .then(() =>
-            this.$notify({
-              type: "success",
-              title: "Success",
-              text: "Invite was created"
-            })
-          )
-          .then(() => this.back())
-          .catch(error => {
-            console.log("error", error);
-            this.$notify({
-              type: "error",
-              title: error.title,
-              text: error.message
-            });
-          });
+      if (this.selectedForm === "new") {
+        let generalFormData = this.$refs.GeneralFormNew.form();
+        if (generalFormData)
+          return ApiService.AdminApi.Students.createNew(generalFormData)
+            .then(() =>
+              this.$notify({
+                type: "success",
+                title: "Success",
+                text: "Student was created"
+              })
+            )
+            .then(() => this.back());
+      } else {
+        let generalFormData = this.$refs.GeneralFormExist.form();
+        if (generalFormData)
+          return ApiService.AdminApi.Students.createExist(generalFormData)
+            .then(() =>
+              this.$notify({
+                type: "success",
+                title: "Success",
+                text: "Student was created"
+              })
+            )
+            .then(() => this.back());
       }
     }
   }

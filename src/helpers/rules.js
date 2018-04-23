@@ -1,9 +1,24 @@
 export const Rules = {
     nameRules: [
+        (v) => !v || v.length <= 20 || 'Name must be less than 20 characters'
+    ],
+    requiredNameRules: [
         (v) => !!v || 'Name is required',
         (v) => v !== null && v.length <= 20 || 'Name must be less than 20 characters'
     ],
-
+    codeRules: [
+        (v) => !v || v.length <= 20 || 'Code must be less than 20 characters'
+    ],
+    requiredCodeRules: [
+        (v) => !!v || 'Code is required',
+        (v) => v !== null && v.length <= 20 || 'Code must be less than 20 characters'
+    ],
+    titleRules: [
+        (v) => !v || v.length <= 20 || 'Title must be less than 20 characters'
+    ],
+    requiredTitleRules: [
+        (v) => !!v || 'Title is required',
+    ],
     ageRules: [
         (v) => !!v || 'Age is required'
     ],
@@ -29,6 +44,22 @@ export const Rules = {
     phoneRules: [
         (v) => (!v || /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(v)) || 'Phone number must be valid'
     ],
+    levelRules: [
+        (v) => (!v || /^[0-9]+$/.test(v)) || 'Level must be valid'
+    ],
+    requiredLevelRules: [
+        (v) => !!v || 'Level is required',
+        (v) => (!v || /^[0-9]+$/.test(v)) || 'Level must be valid'
+    ],
+    requiredSpecialtyRules: [
+        (v) => !!v || 'Specialty is required',
+    ],
+    requiredPositiontyRules: [
+        (v) => !!v || 'Position is required',
+    ],
+    requiredCoursetyRules: [
+        (v) => !!v || 'Course is required',
+    ],
     requiredPasswordRules: [
         (v) => !!v || 'Password is required',
         // (v) => v !== null && v.length <= 20 || 'Password must be less than 20 characters'
@@ -43,5 +74,12 @@ export const Rules = {
     ],
     requiredRolesRules: [
         (v) => !!v || 'Role is required'
+    ],
+    levelNumber: [
+        (v) => (!v || /^[0-9]+$/.test(v)) || 'Value must be valid'
+    ],
+    requiredNumberRules: [
+        (v) => !!v || 'Field is required',
+        (v) => (!v || /^[0-9]+$/.test(v)) || 'Value must be valid'
     ]
 }

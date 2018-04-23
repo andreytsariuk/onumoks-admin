@@ -6,4 +6,9 @@ export class Specialties {
         return Axios.Api.get(`/v1/admin/specialties`, { params });
     }
 
+    static create(newSpecialty) {
+        return Axios.Api.post(`/v1/admin/specialties`, newSpecialty);
+
+    }
+
 }

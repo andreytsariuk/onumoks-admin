@@ -13,7 +13,7 @@
                 <v-subheader>First Name</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-text-field :disabled="disabled" :rules="Rules.nameRules" name="input-1" label="First Name" v-model="fname"></v-text-field>
+                <v-text-field :disabled="disabled" :rules="Rules.requiredNameRules" name="input-1" label="First Name" v-model="fname"></v-text-field>
             </v-flex>
         </v-layout>
         <v-layout row>
@@ -21,7 +21,7 @@
                 <v-subheader>Last Name</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-text-field :disabled="disabled" :rules="Rules.nameRules" name="input-1" label="Last Name" v-model="lname"></v-text-field>
+                <v-text-field :disabled="disabled" :rules="Rules.requiredNameRules" name="input-1" label="Last Name" v-model="lname"></v-text-field>
             </v-flex>
         </v-layout>
         <v-layout row>
@@ -30,14 +30,14 @@
             </v-flex>
 
             <v-flex xs8>
-                <v-select required label="Specialty" :items="specialties" v-model="specialty" item-text="name" item-value="id" max-height="auto" autocomplete>
+                <v-select :rules="Rules.requiredSpecialtyRules" required label="Specialty" :items="specialties" v-model="specialty" item-text="name" item-value="id" max-height="auto" autocomplete>
                     <template slot="selection" slot-scope="data">
                         <div v-if="data.item.profile && data.item.profile.avatar &&  data.item.profile.avatar.publicPath">
                             <v-avatar :tile="false" :size="26" color="secondry">
                                 <img class="teal lighten-1" :src="data.item.profile.avatar.publicPath" alt="user avatar">
                             </v-avatar>
                         </div>
-                        <v-icon v-else medium color="primary">account_circle</v-icon>
+                        <v-icon v-else medium color="primary">bubble_chart</v-icon>
                         &nbsp; {{ data.item.name }}
                     </template>
                     <template slot="item" slot-scope="data">
@@ -51,12 +51,13 @@
                                         <img class="teal lighten-1" :src="data.item.profile.avatar.publicPath" alt="user avatar">
                                     </v-avatar>
                                 </div>
-                                <v-icon v-else medium color="primary">account_circle</v-icon>
+                                <v-icon v-else medium color="primary">bubble_chart</v-icon>
+
                             </v-list-tile-avatar>
 
                             <v-list-tile-content>
                                 <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                                <v-list-tile-sub-title v-html="formatRoles(data.item.short_roles)"></v-list-tile-sub-title>
+                                <v-list-tile-sub-title v-html="data.item.title"></v-list-tile-sub-title>
                             </v-list-tile-content>
                         </template>
                     </template>
@@ -152,14 +153,14 @@ export default {
       this.$refs.generalForm.reset();
     },
     form() {
+      console.log("FF");
       if (this.$refs.generalForm.validate()) {
         return {
           email: this.email,
-          password: this.password,
           fname: this.fname,
           lname: this.lname,
-          work_email: this.work_email,
-          work_phone: this.work_phone
+          specialty_id: this.specialty,
+          course_id: this.course
         };
       }
     },
@@ -171,18 +172,6 @@ export default {
     },
     clear() {
       this.$refs.generalForm.reset();
-    },
-    form() {
-      if (this.$refs.generalForm.validate()) {
-        return {
-          name: this.name,
-          email: this.email,
-          rules: {
-            roles: [this.role]
-          },
-          expires_at: this.expires_at
-        };
-      }
     }
   }
 };

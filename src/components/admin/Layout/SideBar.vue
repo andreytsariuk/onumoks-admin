@@ -1,28 +1,38 @@
 <template>
-    <v-list>
-        <v-list-group v-for="(item, i) in items" :key="i">
-             
-            <v-list-tile  slot="activator"  ripple @click.native="navigate(item)">
-                <v-list-tile-action>
-                    <v-icon v-html="item.icon"></v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile v-for="subItem in item.items" v-bind:key="subItem.title" @click.native="navigate(subItem)">
-                <v-list-tile-action>
-                    <v-icon v-html="subItem.icon"></v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
-                </v-list-tile-content>
-                <v-list-tile-action>
-                    <v-icon>{{ subItem.action }}</v-icon>
-                </v-list-tile-action>
-            </v-list-tile>
-        </v-list-group>
-    </v-list>
+  <v-list>
+
+    <v-list-group v-for="(item, i) in items" :key="i" v-if="item.items&&item.items.length">
+
+      <v-list-tile slot="activator" ripple @click.native="navigate(item)">
+        <v-list-tile-action>
+          <v-icon v-html="item.icon"></v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile v-if="item.items&&item.items.length" v-for="subItem in item.items" v-bind:key="subItem.title" @click.native="navigate(subItem)">
+        <v-list-tile-action>
+          <v-icon v-html="subItem.icon"></v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+        </v-list-tile-content>
+        <v-list-tile-action>
+          <v-icon>{{ subItem.action }}</v-icon>
+        </v-list-tile-action>
+      </v-list-tile>
+    </v-list-group>
+    <v-list-tile v-else avatar :key="item.title" @click.native="navigate(item)">
+      <v-list-tile-action>
+        <v-icon v-html="item.icon"></v-icon>
+      </v-list-tile-action>
+      <v-list-tile-content>
+        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+      </v-list-tile-content>
+    </v-list-tile>
+
+  </v-list>
 </template>
 
 <script>
@@ -32,39 +42,29 @@ export default {
     return {
       items: [
         {
-          icon: "dashboard",
-          title: "Dashboard",
-          link: "/admin/dashboard"
+          icon: "insert_invitation",
+          title: "Calendar",
+          link: "/admin/calendar"
         },
         {
           icon: "people",
           title: "Users",
-          link: "/admin/users",
+          link: "/admin/users"
+        },
+        {
+          icon: "school",
+          title: "Lectors",
+          link: "/admin/lectors",
           items: [
             {
-              icon: "book",
-              title: "Students",
-              link: "/admin/students"
-            },
-            {
-              icon: "school",
-              title: "Lectors",
-              link: "/admin/lectors"
-            },
-            {
-              icon: "lock",
-              title: "Admins",
-              link: "/admin/admins"
-            },
-            {
-              icon: "people",
-              title: "All Users",
-              link: "/admin/users"
+              icon: "bubble_chart",
+              title: "Positions",
+              link: "/admin/positions"
             }
           ]
         },
         {
-          icon: "school",
+          icon: "book",
           title: "Students",
           link: "/admin/users",
           items: [
@@ -106,7 +106,7 @@ export default {
           link: "/admin/files"
         },
         {
-          icon: "bubble_chart",
+          icon: "add",
           title: "Invites",
           link: "/admin/invites"
         }
@@ -115,8 +115,7 @@ export default {
   },
   methods: {
     navigate(item) {
-      if (!item.items)
-        this.$router.push(`/${AuthService.Workspace().name}${item.link}`);
+      this.$router.push(`/${AuthService.Workspace().name}${item.link}`);
     }
   }
 };

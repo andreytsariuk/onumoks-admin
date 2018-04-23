@@ -4,10 +4,20 @@ import Books from '../components/admin/Books';
 import Specialties from '../components/admin/Specialties';
 import Cources from '../components/admin/Cources';
 import Students from '../components/admin/Students';
+import Lectors from '../components/admin/Lectors';
 import Invites from '../components/admin/Invites';
 import Files from '../components/admin/Files';
+import Positions from '../components/admin/Positions';
+import Calendar from '../components/admin/Calendar/Calendar.vue'
 
 export const AdminRoutes = [
+    //----------------------Calendar--------------
+    {
+
+        path: 'calendar',
+        component: Calendar
+    },
+
 
     //-----------------------Users----------------
     {
@@ -36,6 +46,22 @@ export const AdminRoutes = [
 
         path: 'students/:id',
         component: Students.Info
+    },
+    //----------------------Lectors-----------------
+    {
+
+        path: 'lectors',
+        component: Lectors.List
+    },
+    {
+
+        path: 'lectors/create',
+        component: Lectors.Create
+    },
+    {
+
+        path: 'lectors/:id',
+        component: Lectors.Info
     },
     //--------------------Subjects------------------
     {
@@ -122,6 +148,17 @@ export const AdminRoutes = [
     {
         path: 'files',
         component: Files.List
+    },
+    //-------------------Cources-------------------------------
+    {
+
+        path: 'positions',
+        component: Positions.List
+
+    },
+    {
+        path: 'positions/create',
+        component: Positions.Create
     }
 
 ]

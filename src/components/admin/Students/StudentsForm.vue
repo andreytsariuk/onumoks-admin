@@ -134,35 +134,13 @@ export default {
       ApiUrl: Config.ApiUrl,
       Rules,
       valid: false,
-      menu: false,
-      modal: false,
       users: [],
       specialties: [],
       courses: [],
       //------------Forms Params
       user: null,
       specialty: null,
-      course: null,
-      name: "",
-      email: "",
-      role: "",
-      expires_at: moment()
-        .add(24, "hours")
-        .format("YYYY-MM-DD"),
-      roles: [
-        {
-          label: "Admin",
-          value: "admins"
-        },
-        {
-          label: "Student",
-          value: "students"
-        },
-        {
-          label: "Lector",
-          value: "lectors"
-        }
-      ]
+      course: null
     };
   },
   created() {
@@ -199,12 +177,9 @@ export default {
     form() {
       if (this.$refs.generalForm.validate()) {
         return {
-          name: this.name,
-          email: this.email,
-          rules: {
-            roles: [this.role]
-          },
-          expires_at: this.expires_at
+          user_id: this.user,
+          specialty_id: this.specialty,
+          course_id: this.course
         };
       }
     }

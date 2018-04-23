@@ -51,7 +51,7 @@
                             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile> -->
-               
+
             </v-list>
         </v-navigation-drawer>
         <div class="month">
@@ -64,23 +64,23 @@
                 </li>
             </ul>
         </div>
-    
+
         <ul class="weekdays">
             <li v-for="day in [0,1,2,3,4,5,6]" :key="day">{{moment().add(day,'days').format('dddd')}}</li>
         </ul>
-    
+
         <ul class="days">
             <li v-for="day in moment().add(1, 'month').diff(moment(), 'days')+1" :key="day" @click.stop="drawer = !drawer">
                 <v-card class="hovered">
                     <v-card-title primary-title>
                         <div>
-    
+
                             <h3 class="headline mb-0 ">{{moment().add(day,'days').format('D')}}</h3>
-    
+
                         </div>
                     </v-card-title>
                     <v-card-actions>
-    
+
                     </v-card-actions>
                 </v-card>
             </li>
@@ -89,165 +89,158 @@
 </template>
 
 <script>
-    import Schedule from "vue-schedule";
-    import moment from "moment";
-    import _ from "lodash";
-    export default {
-        data() {
-            return {
-                drawer: null,
-                items: [{
-                        title: 'Home',
-                        icon: 'dashboard'
-                    },
-                    {
-                        title: 'About',
-                        icon: 'question_answer'
-                    }
-                ],
-                moment: moment,
-                weeksCount: moment()
-                    .add(1, "month")
-                    .diff(moment(), "weeks"),
-    
-            };
+import Schedule from "vue-schedule";
+import moment from "moment";
+import _ from "lodash";
+export default {
+  data() {
+    return {
+      drawer: null,
+      items: [
+        {
+          title: "Home",
+          icon: "dashboard"
         },
-        components: {
-            Schedule
-        },
-        methods: {
-            navigate(item) {
-                if (!item.items) this.$router.push(item.link);
-            }
+        {
+          title: "About",
+          icon: "question_answer"
         }
+      ],
+      moment: moment,
+      weeksCount: moment()
+        .add(1, "month")
+        .diff(moment(), "weeks")
     };
+  },
+  components: {
+    Schedule
+  },
+  methods: {
+    navigate(item) {
+      if (!item.items) this.$router.push(item.link);
+    }
+  }
+};
 </script>
 
 <style>
-    @media (max-width: 1024px) {
-        .days li {
-            margin-bottom: 2px
-        }
-        .days .card {
-            margin: 2px!important;
-        }
-    }
-    
-    .hovered {
-        transition: all .2s ease-in-out;
-    }
-    
-    .hovered:hover {
-        transform: scale(1.05);
-    }
-    
-    .month {
-        padding: 35px 25px;
-        width: 100%;
-        background: #1abc9c;
-        text-align: center;
-    }
-    
-    
-    /* Month list */
-    
-    .month ul {
-        margin: 0;
-        padding: 0;
-    }
-    
-    .month ul li {
-        color: white;
-        font-size: 20px;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-    }
-    
-    
-    /* Previous button inside month header */
-    
-    .month .prev {
-        float: left;
-        padding-top: 10px;
-    }
-    
-    
-    /* Next button */
-    
-    .month .next {
-        float: right;
-        padding-top: 10px;
-    }
-    
-    
-    /* Weekdays (Mon-Sun) */
-    
-    .weekdays {
-        margin: 0;
-        padding: 10px 0;
-        background-color: #ddd;
-    }
-    
-    .weekdays li {
-        display: inline-block;
-        width: 13.6%;
-        color: #666;
-        text-align: center;
-    }
-    
-    
-    /* Days (1-31) */
-    
-    .days {
-        padding: 10px 0 0 30px;
-        background: #eee;
-        margin: 0;
-        text-align: left;
-    }
-    
-    .days li {
-        list-style-type: none;
-        display: inline-block;
-        width: 13.6%;
-        text-align: center;
-        margin-bottom: 5px;
-        font-size: 12px;
-        color: #777;
-    }
-    
-    
-    /* Highlight the "current" day */
-    
-    .days li .active {
-        padding: 5px;
-        background: #1abc9c;
-        color: white !important
-    }
-    
-    
-    /* Add media queries for smaller screens */
-    
-    @media screen and (max-width:720px) {
-        .weekdays li,
-        .days li {
-            width: 13.1%;
-        }
-    }
-    
-    @media screen and (max-width: 420px) {
-        .weekdays li,
-        .days li {
-            width: 12.5%;
-        }
-        .days li .active {
-            padding: 2px;
-        }
-    }
-    
-    @media screen and (max-width: 290px) {
-        .weekdays li,
-        .days li {
-            width: 12.2%;
-        }
-    }
+@media (max-width: 1024px) {
+  .days li {
+    margin-bottom: 2px;
+  }
+  .days .card {
+    margin: 2px !important;
+  }
+}
+
+.hovered {
+  transition: all 0.2s ease-in-out;
+}
+
+.hovered:hover {
+  transform: scale(1.05);
+}
+
+.month {
+  padding: 35px 25px;
+  width: 100%;
+  background: #1abc9c;
+  text-align: center;
+}
+
+/* Month list */
+
+.month ul {
+  margin: 0;
+  padding: 0;
+}
+
+.month ul li {
+  color: white;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+/* Previous button inside month header */
+
+.month .prev {
+  float: left;
+  padding-top: 10px;
+}
+
+/* Next button */
+
+.month .next {
+  float: right;
+  padding-top: 10px;
+}
+
+/* Weekdays (Mon-Sun) */
+
+.weekdays {
+  margin: 0;
+  padding: 10px 0;
+  background-color: #ddd;
+}
+
+.weekdays li {
+  display: inline-block;
+  width: 13.6%;
+  color: #666;
+  text-align: center;
+}
+
+/* Days (1-31) */
+
+.days {
+  padding: 10px 0 0 30px;
+  background: #eee;
+  margin: 0;
+  text-align: left;
+}
+
+.days li {
+  list-style-type: none;
+  display: inline-block;
+  width: 13.6%;
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: #777;
+}
+
+/* Highlight the "current" day */
+
+.days li .active {
+  padding: 5px;
+  background: #1abc9c;
+  color: white !important;
+}
+
+/* Add media queries for smaller screens */
+
+@media screen and (max-width: 720px) {
+  .weekdays li,
+  .days li {
+    width: 13.1%;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .weekdays li,
+  .days li {
+    width: 12.5%;
+  }
+  .days li .active {
+    padding: 2px;
+  }
+}
+
+@media screen and (max-width: 290px) {
+  .weekdays li,
+  .days li {
+    width: 12.2%;
+  }
+}
 </style>

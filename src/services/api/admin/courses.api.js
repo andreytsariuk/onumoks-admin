@@ -6,4 +6,9 @@ export class Courses {
         return Axios.Api.get(`/v1/admin/courses`, { params });
     }
 
+    static create(newCourse) {
+        return Axios.Api.post(`/v1/admin/courses`, newCourse);
+
+    }
+
 }

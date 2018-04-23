@@ -4,6 +4,8 @@ import { Files } from "./files.api";
 import { Courses } from './courses.api';
 import { Specialties } from './specialties.api';
 import { Students } from './students.api';
+import { Positions } from './positions.api';
+import { Lectors } from './lectors.api';
 
 
 export const AdminApi = {
@@ -12,5 +14,7 @@ export const AdminApi = {
     Files,
     Courses,
     Specialties,
-    Students
+    Students,
+    Positions,
+    Lectors
 };

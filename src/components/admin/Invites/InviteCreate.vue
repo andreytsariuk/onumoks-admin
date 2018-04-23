@@ -67,15 +67,7 @@ export default {
               text: "Invite was created"
             })
           )
-          .then(() => this.back())
-          .catch(error => {
-            console.log("error", error);
-            this.$notify({
-              type: "error",
-              title: error.title,
-              text: error.message
-            });
-          });
+          .then(() => this.back());
       }
     }
   }

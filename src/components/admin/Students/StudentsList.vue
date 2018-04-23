@@ -53,10 +53,17 @@
 
                                 </td>
                                 <td class="text-xs-center">{{ props.item.user.email }}</td>
-                                <td class="text-xs-center">{{ props.item.user.profile.fname }}</td>
-                                <td class="text-xs-center">{{ props.item.user.profile.lname }}</td>
-                                <td class="text-xs-center">{{ props.item.user.profile.work_phone || '-' }}</td>
-                                <td class="text-xs-center">{{ formatRoles(props.item.short_roles) }}</td>
+                                <td class="text-xs-center">{{ props.item.user&& props.item.user.profile && props.item.user.name }}</td>
+                                <td class="text-xs-center">
+                                    <router-link v-if="props.item.specialty" :to="'specialties'">
+                                        {{ props.item.specialty.name }}
+                                    </router-link>
+                                </td>
+                                <td class="text-xs-center">
+                                    <router-link v-if="props.item.course" :to="'courses'">
+                                        {{ props.item.course.title }}
+                                    </router-link>
+                                </td>
                                 <td class="text-xs-center">
                                     <span class="group pa-2">
                                         <!-- <v-icon>home</v-icon> -->
@@ -108,10 +115,9 @@ export default {
         },
         { text: "Avatar", align: "center", value: "avatar", sortable: false },
         { text: "E-mail", align: "center", value: "calories" },
-        { text: "First Name", align: "center", value: "firstName" },
-        { text: "Last Name", align: "center", value: "lasttName" },
-        { text: "Phone Number", align: "center", value: "phone" },
-        { text: "Role (s)", align: "center", value: "roles" },
+        { text: "Name", align: "center", value: "name" },
+        { text: "Specialty", align: "center", value: "Specialty" },
+        { text: "Course", align: "center", value: "Course" },
         { text: "Actions", align: "center", sortable: false, value: "action" }
       ]
     };

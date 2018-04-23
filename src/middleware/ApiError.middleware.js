@@ -20,6 +20,13 @@ export default (error) => {
                     text: String(error.response.data).length > 20 ? 'Sorry, requested not found.' : error.response.data
                 });
                 break;
+            case error.response.status == 409:
+                router.app.$notify({
+                    type: 'error',
+                    title: error.statusText,
+                    text: error.response.data.description
+                });
+                break;
 
             default:
                 router.app.$notify({
