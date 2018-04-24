@@ -123,7 +123,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 @media (max-width: 1024px) {
   .days li {
     margin-bottom: 2px;
