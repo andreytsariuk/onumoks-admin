@@ -4,11 +4,11 @@
     <router-view name="AdminHome"></router-view>
     <router-view></router-view>
     <router-view name="SignIn"></router-view>
-  
-                   <v-footer :fixed="fixed">
+
+    <v-footer :fixed="fixed">
       <span>&copy; 2018</span>
     </v-footer>
-  
+
   </v-app>
 </template>
 

@@ -7,7 +7,7 @@
                     <v-icon>chevron_left</v-icon>
                 </v-btn>
                <v-card-title>
-                Create Cource
+                Create Course
             </v-card-title>
             </v-toolbar>
             
@@ -33,7 +33,7 @@
     export default {
         data() {
             return {
-                Cource: {}
+                Course: {}
             }
         },
         created() {
@@ -60,7 +60,7 @@
                     return Api
                         .Users()
                         .create(generalFormData)
-                        .then(res => this.Cource = res.data)
+                        .then(res => this.Course = res.data)
                         .then(() => this.$notify({
                             type: 'success',
                             title: 'Success',

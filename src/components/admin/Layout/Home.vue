@@ -36,7 +36,7 @@
       </v-menu>
     </v-toolbar>
     <main>
-      <v-content>
+      <v-content class="main-content">
         <router-view></router-view>
       </v-content>
     </main>
@@ -98,6 +98,9 @@ export default {
   padding: 20px;
   font-size: 1.7vh;
 }
+/* .main-content {
+  overflow-x: scroll !important;
+} */
 </style>
 
 

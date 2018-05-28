@@ -44,7 +44,7 @@
                                  <td class="text-xs-center">{{ props.item.created_at }}</td>
                                  <td class="text-xs-center">{{ props.item.student_count }}</td>
                                  <td class="text-xs-center">{{ props.item.threads_count }}</td>
-                                 <td class="text-xs-center">{{ props.item.cources_count }}</td>
+                                 <td class="text-xs-center">{{ props.item.courses_count }}</td>
                                 <td class="text-xs-center">
                                     <span class="group pa-2">
                                      <!-- <v-icon>home</v-icon> -->
@@ -95,7 +95,7 @@ export default {
                 { text: 'Created', align: 'center', value: 'created_at' },
                 { text: 'Student Count', align: 'center', value: 'student_count' },
                 { text: 'Threads Count', align: 'center', value: 'threads_count' },
-                { text: 'Cources Count', align: 'center', value: 'cources_count' }
+                { text: 'Courses Count', align: 'center', value: 'courses_count' }
                   
             ]
         }

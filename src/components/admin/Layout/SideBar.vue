@@ -66,7 +66,7 @@ export default {
         {
           icon: "book",
           title: "Students",
-          link: "/admin/users",
+          link: "/admin/students",
           items: [
             {
               icon: "bubble_chart",
@@ -93,7 +93,14 @@ export default {
         {
           icon: "subject",
           title: "Subjects",
-          link: "/admin/subjects"
+          link: "/admin/subjects",
+          items: [
+            {
+              icon: "bubble_chart",
+              title: "Lesson Types",
+              link: "/admin/lesson-types"
+            }
+          ]
         },
         {
           icon: "book",

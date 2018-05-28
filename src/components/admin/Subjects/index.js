@@ -1,8 +1,14 @@
-import List from './List/SubjectsList.vue';
-import Create from './Create/SubjectsCreate.vue';
+import List from './SubjectsList.vue';
+import Create from './SubjectsCreate.vue';
+import Info from './SubjectsInfo.vue';
+import SubjectsForm from './SubjectsForm.vue';
+
+
 
 
 export default {
-    List: List,
-    Create: Create
+    List,
+    Create,
+    Info,
+    SubjectsForm
 }

@@ -75,7 +75,7 @@ import Config from "../../../config";
 import { Rules } from "../../../helpers";
 import _ from "lodash";
 export default {
-  props: ["id", "disabled", "cource"],
+  props: ["id", "disabled", "course"],
   data() {
     return {
       Rules: Rules,

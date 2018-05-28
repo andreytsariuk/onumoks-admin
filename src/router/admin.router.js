@@ -2,13 +2,16 @@ import Users from '../components/admin/Users';
 import Subjects from '../components/admin/Subjects';
 import Books from '../components/admin/Books';
 import Specialties from '../components/admin/Specialties';
-import Cources from '../components/admin/Cources';
+import Courses from '../components/admin/Courses';
 import Students from '../components/admin/Students';
 import Lectors from '../components/admin/Lectors';
 import Invites from '../components/admin/Invites';
 import Files from '../components/admin/Files';
 import Positions from '../components/admin/Positions';
-import Calendar from '../components/admin/Calendar/Calendar.vue'
+import Calendar from '../components/admin/Calendar/Calendar.vue';
+import LessonTypes from '../components/admin/LessonTypes';
+import Groups from '../components/admin/Groups';
+
 
 export const AdminRoutes = [
     //----------------------Calendar--------------
@@ -79,6 +82,22 @@ export const AdminRoutes = [
         path: 'subjects/:id',
         component: Subjects.Info
     },
+    //--------------------Subjects------------------
+    {
+
+        path: 'lesson-types',
+        component: LessonTypes.List
+
+    },
+    {
+        path: 'lesson-types/create',
+        component: LessonTypes.Create
+    },
+    // {
+
+    //     path: 'lesson-types/:id',
+    //     component: Subjects.Info
+    // },
 
     //--------------------Books---------------------
 
@@ -114,20 +133,20 @@ export const AdminRoutes = [
         path: 'specialties/:id',
         component: Specialties.Info
     },
-    //-------------------Cources-------------------------------
+    //-------------------Courses-------------------------------
     {
 
         path: 'courses',
-        component: Cources.List
+        component: Courses.List
 
     },
     {
         path: 'courses/create',
-        component: Cources.Create
+        component: Courses.Create
     },
     {
         path: 'courses/:id',
-        component: Cources.Info
+        component: Courses.Info
     },
     //-------------------Invites-------------------------------
     {
@@ -142,14 +161,14 @@ export const AdminRoutes = [
     },
     // {
     //     path: 'invites/:id',
-    //     component: Cources.Info
+    //     component: Courses.Info
     // }
     //-------------------Files-------------------------------
     {
         path: 'files',
         component: Files.List
     },
-    //-------------------Cources-------------------------------
+    //-------------------Positions-------------------------------
     {
 
         path: 'positions',
@@ -159,6 +178,18 @@ export const AdminRoutes = [
     {
         path: 'positions/create',
         component: Positions.Create
+    },
+    //-------------------Groups-------------------------------
+    {
+
+        path: 'groups',
+        component: Groups.List
+
+    },
+    {
+        path: 'groups/create',
+        component: Groups.Create
     }
+
 
 ]

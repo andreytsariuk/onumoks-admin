@@ -7,10 +7,10 @@
                     <v-icon>chevron_left</v-icon>
                 </v-btn>
                <v-card-title>
-                 Cource Info
+                 Course Info
             </v-card-title>
             </v-toolbar>
-            <StudentsForm :disabled="disabled" ref="GeneralForm" :cource="Cource"> </StudentsForm>
+            <StudentsForm :disabled="disabled" ref="GeneralForm" :course="Course"> </StudentsForm>
             <v-card-actions>
                 <v-btn  @click="back" flat>Back</v-btn>
                 <v-btn v-if="disabled" icon @click="edit">
@@ -39,7 +39,7 @@
                 loading: false,
                 ApiUrl: Config.ApiUrl,
                 disabled: true,
-                Cource: {}
+                Course: {}
             }
         },
         created() {
@@ -67,7 +67,7 @@
                 return Api
                     .Users()
                     .get(this.$route.params.id)
-                    .then(res => this.Cource = res.data)
+                    .then(res => this.Course = res.data)
                     .catch(error => {
                         console.log('error', error);
                         this.$notify({
@@ -83,11 +83,11 @@
                     return Api
                         .Users()
                         .update(this.$route.params.id, generalFormData)
-                        .then(res => this.Cource = res.data)
+                        .then(res => this.Course = res.data)
                         .then(() => this.$notify({
                             type: 'success',
                             title: 'Success',
-                            text: 'Cource has been created'
+                            text: 'Course has been created'
                         }))
                         .then(() => this.back())
                         .catch(error => {

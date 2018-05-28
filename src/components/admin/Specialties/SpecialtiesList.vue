@@ -28,7 +28,7 @@
             </v-flex>
         </v-layout>
         <v-layout row wrap>
-            <v-flex class="elevation-0 padding " sm12>
+            <v-flex class="elevation-0 padding " sm12 xs12>
                 <v-card darck>
                     <v-data-table v-model="selected" select-all selected-key="name" v-bind:headers="headers" v-bind:items="items" v-bind:search="search" v-bind:pagination.sync="pagination" :total-items="totalItems" :loading="loading" class="elevation-1">
                         <template slot="headerCell" scope="props">
@@ -54,7 +54,7 @@
                                 <td class="text-xs-center">{{ props.item.created_at }}</td>
                                 <td class="text-xs-center">{{ props.item.studentsCount || 0 }}</td>
                                 <td class="text-xs-center">{{ props.item.coursesCount || 0 }}</td>
-                                <td class="text-xs-center">{{ props.item.cources_count || 0}}</td>
+                                <td class="text-xs-center">{{ props.item.courses_count || 0}}</td>
                                 <td class="text-xs-center">
                                     <span class="group pa-2">
                                         <!-- <v-icon>home</v-icon> -->
@@ -93,7 +93,9 @@ export default {
       selected: [],
       loading: true,
       selectedUser: false,
-      pagination: {},
+      pagination: {
+        rowsPerPage: 10
+      },
       headers: [
         {
           text: "id",
@@ -105,7 +107,7 @@ export default {
         { text: "Title", align: "center", value: "title" },
         { text: "Created", align: "center", value: "created_at" },
         { text: "Students Count", align: "center", value: "studentsCount" },
-        { text: "Cources Count", align: "center", value: "coursesCount" },
+        { text: "Courses Count", align: "center", value: "coursesCount" },
         { text: "Threads Count", align: "center", value: "threads_count" },
         { text: "Actions", align: "center" }
       ]

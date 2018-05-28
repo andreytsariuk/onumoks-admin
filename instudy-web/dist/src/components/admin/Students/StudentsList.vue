@@ -94,7 +94,7 @@ export default {
                 { text: 'Year', align: 'center', value: 'year' },
                 { text: 'Specialty', align: 'center', value: 'specialty' },
                 { text: 'Student Count', align: 'center', value: 'student_count' },
-                { text: 'Groups Count', align: 'center', value: 'cources_count' },
+                { text: 'Groups Count', align: 'center', value: 'courses_count' },
                 { text: 'Created', align: 'center', value: 'created_at' }
                   
             ]
@@ -153,7 +153,7 @@ export default {
                 .then(res => {
                     this.loading = false;
                     this.items = res.items;
-                    //res.data.items = _.map(res.data.items, cource => { user.roles = _.join(user.roles, ', '); return user });
+                    //res.data.items = _.map(res.data.items, course => { user.roles = _.join(user.roles, ', '); return user });
                     return res.data;
                 })
                 .catch(err => {

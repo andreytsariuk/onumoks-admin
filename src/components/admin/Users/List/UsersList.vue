@@ -21,7 +21,7 @@
       </v-flex>
     </v-layout>
     <v-layout row wrap>
-      <v-flex class="elevation-0 padding " sm12>
+      <v-flex class="elevation-0 padding " sm12 xs12>
         <v-card>
           <v-data-table v-model="selected" select-all selected-key="name" v-bind:headers="headers" v-bind:items="items" v-bind:search="search" v-bind:pagination.sync="pagination" :total-items="totalItems" :loading="loading" class="elevation-1">
             <template slot="headerCell" scope="props">
@@ -97,19 +97,30 @@ export default {
       selected: [],
       loading: true,
       selectedUser: false,
-      pagination: {},
+      pagination: {
+        rowsPerPage: 10
+      },
       _: _,
       headers: [
         {
           text: "id",
           align: "center",
-          sortable: false,
           value: "id"
         },
         { text: "Avatar", align: "center", value: "avatar", sortable: false },
-        { text: "E-mail", align: "center", value: "calories" },
-        { text: "First Name", align: "center", value: "firstName" },
-        { text: "Last Name", align: "center", value: "lasttName" },
+        { text: "E-mail", align: "center", value: "email" },
+        {
+          text: "First Name",
+          align: "center",
+          value: "firstName",
+          sortable: false
+        },
+        {
+          text: "Last Name",
+          align: "center",
+          value: "lastName",
+          sortable: false
+        },
         { text: "Phone Number", align: "center", value: "phone" },
         { text: "Role (s)", align: "center", value: "roles" },
         { text: "Actions", align: "center", sortable: false, value: "action" }

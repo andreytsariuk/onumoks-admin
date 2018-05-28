@@ -86,7 +86,7 @@
     import _ from 'lodash';
     import Components from '../Components'
     export default {
-        props: ['id', 'disabled', 'cource'],
+        props: ['id', 'disabled', 'course'],
         data() {
             return {
                 Rules: Rules,
@@ -121,12 +121,12 @@
             }
         },
         watch: {
-            cource: function(newCource) {
-                this.name = newCource.name ? newCource.name : '';
-                this.note = newCource.note ? newCource.note : '';
-                this.year = newCource.year ? String(newCource.year) : '';
-                this.age = newCource.age ? newCource.age : '';
-                this.specialty = newCource.specialty ? newCource.specialty : '';
+            course: function(newCourse) {
+                this.name = newCourse.name ? newCourse.name : '';
+                this.note = newCourse.note ? newCourse.note : '';
+                this.year = newCourse.year ? String(newCourse.year) : '';
+                this.age = newCourse.age ? newCourse.age : '';
+                this.specialty = newCourse.specialty ? newCourse.specialty : '';
             },
         },
         methods: {

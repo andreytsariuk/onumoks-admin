@@ -6,7 +6,10 @@ import { Specialties } from './specialties.api';
 import { Students } from './students.api';
 import { Positions } from './positions.api';
 import { Lectors } from './lectors.api';
-
+import { Subjects } from './subjects.api';
+import { LessonTypes } from './lessonTypes.api';
+import { Threads } from './threads.api';
+import { Groups } from './groups.api';
 
 export const AdminApi = {
     Users,
@@ -14,7 +17,11 @@ export const AdminApi = {
     Files,
     Courses,
     Specialties,
-    Students,
+    Students: new Students(),
     Positions,
-    Lectors
+    Lectors,
+    Subjects,
+    LessonTypes,
+    Threads,
+    Groups
 };

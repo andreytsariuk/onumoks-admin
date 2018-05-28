@@ -21,7 +21,7 @@
             </v-flex>
         </v-layout>
         <v-layout row wrap>
-            <v-flex class="elevation-0 padding " sm12>
+            <v-flex class="elevation-0 padding " sm12 xs12>
                 <v-card>
                     <v-data-table v-model="selected" select-all selected-key="name" v-bind:headers="headers" v-bind:items="items" v-bind:search="search" v-bind:pagination.sync="pagination" :total-items="totalItems" :loading="loading" class="elevation-1">
                         <template slot="headerCell" scope="props">
@@ -104,20 +104,27 @@ export default {
       selected: [],
       loading: true,
       selectedUser: false,
-      pagination: {},
+      pagination: {
+        rowsPerPage: 10
+      },
       _: _,
       headers: [
         {
           text: "id",
           align: "center",
-          sortable: false,
+
           value: "id"
         },
         { text: "Avatar", align: "center", value: "avatar", sortable: false },
-        { text: "E-mail", align: "center", value: "calories" },
-        { text: "Name", align: "center", value: "name" },
-        { text: "Specialty", align: "center", value: "Specialty" },
-        { text: "Course", align: "center", value: "Course" },
+        { text: "E-mail", align: "center", value: "calories", sortable: false },
+        { text: "Name", align: "center", value: "name", sortable: false },
+        {
+          text: "Specialty",
+          align: "center",
+          value: "Specialty",
+          sortable: false
+        },
+        { text: "Course", align: "center", value: "Course", sortable: false },
         { text: "Actions", align: "center", sortable: false, value: "action" }
       ]
     };
@@ -128,7 +135,7 @@ export default {
   watch: {
     pagination: {
       handler(newValue, oldValue) {
-        if (!oldValue.page) return;
+        if (!oldValue.page || newValue.page === oldValue.page) return;
         this.getDataFromApi().then(res => {
           console.log("res", res);
           this.items = res.items;
@@ -136,11 +143,19 @@ export default {
         });
       },
       deep: true
+    },
+    search: {
+      handler(newValue, oldValue) {
+        if (newValue === oldValue) return;
+        this.listSearch().then(res => {
+          this.items = res.items;
+          this.totalItems = res.pagination.rowCount;
+        });
+      }
     }
   },
   mounted() {
     this.getDataFromApi().then(res => {
-      console.log("res", res);
       this.items = res.items;
       this.totalItems = res.pagination.rowCount;
     });
@@ -160,6 +175,20 @@ export default {
         this.pagination.sortBy = column;
         this.pagination.descending = false;
       }
+    },
+    listSearch() {
+      return ApiService.AdminApi.Students.search({
+        search: this.search
+      })
+        .then(res => {
+          this.loading = false;
+          return res;
+        })
+        .catch(err => {
+          this.loading = false;
+          this.items = [];
+          return [];
+        });
     },
     showUser(userId) {
       console.log("showUser");

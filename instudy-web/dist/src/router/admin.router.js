@@ -2,7 +2,7 @@ import Users from '../components/admin/Users';
 import Subjects from '../components/admin/Subjects';
 import Books from '../components/admin/Books';
 import Specialties from '../components/admin/Specialties';
-import Cources from '../components/admin/Cources';
+import Courses from '../components/admin/Courses';
 import Students from '../components/admin/Students';
 
 export const AdminRoutes = [
@@ -86,20 +86,20 @@ export const AdminRoutes = [
         path: 'specialties/:id',
         component: Specialties.Info
     },
-    //-------------------Cources-------------------------------
+    //-------------------Courses-------------------------------
     {
 
         path: 'courses',
-        component: Cources.List
+        component: Courses.List
 
     },
     {
         path: 'courses/create',
-        component: Cources.Create
+        component: Courses.Create
     },
     {
         path: 'courses/:id',
-        component: Cources.Info
+        component: Courses.Info
     }
 
 ]

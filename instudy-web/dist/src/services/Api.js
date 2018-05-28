@@ -5,7 +5,7 @@ export class Api {
     static Users() { return UsersApi }
     static Subjects() { return SubjectsApi }
     static Specialties = () => SpecialtiesApi;
-    static Cources = () => CourcesApi;
+    static Courses = () => coursesApi;
 
     static Axios = () => Axios;
 
@@ -112,7 +112,7 @@ class SpecialtiesApi {
     }
 }
 
-class CourcesApi {
+class coursesApi {
 
 
     static list(params) {
@@ -128,17 +128,17 @@ class CourcesApi {
             })
     }
 
-    static create(newCource) {
+    static create(newCourse) {
         return Axios.Api
-            .post(`/courses`, newCource, {
+            .post(`/courses`, newCourse, {
                 withCredentials: true
             });
 
     }
 
-    static update(id, newCource) {
+    static update(id, newCourse) {
         return Axios.Api
-            .put(`/courses/${id}`, newCource, {
+            .put(`/courses/${id}`, newCourse, {
                 withCredentials: true
             })
     }

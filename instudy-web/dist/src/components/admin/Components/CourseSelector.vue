@@ -72,7 +72,7 @@
     methods: {
       querySelections(v) {
         this.loading = true
-        return Api.Cources()
+        return Api.Courses()
           .list({
             page: 1,
             rowsPerPage: 5,
