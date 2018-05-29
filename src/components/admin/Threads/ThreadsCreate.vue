@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex xs12 class="padding elevation-0">
         <v-card class="elevation-2 padding">
-          <LessonTypesForm ref="GeneralForm" :specialty="Specialty"> </LessonTypesForm>
+          <ThreadsForm ref="GeneralForm" :specialty="Specialty"> </ThreadsForm>
           <v-card-actions>
             <v-btn @click="back" flat>Back</v-btn>
             <v-btn @click="create" flat>Create</v-btn>
@@ -20,7 +20,7 @@
 <script>
 import Config from "../../../config";
 import { ApiService } from "../../../services";
-import LessonTypesForm from "./LessonTypesForm.vue";
+import ThreadsForm from "./ThreadsForm.vue";
 export default {
   data() {
     return {
@@ -41,7 +41,7 @@ export default {
     console.log("CREATED!!");
   },
   components: {
-    LessonTypesForm
+    ThreadsForm
   },
   computed: {
     avatarSize() {
@@ -58,12 +58,12 @@ export default {
     create() {
       let generalFormData = this.$refs.GeneralForm.form();
       if (generalFormData) {
-        return ApiService.AdminApi.LessonTypes.create(generalFormData)
+        return ApiService.AdminApi.Threads.create(generalFormData)
           .then(() =>
             this.$notify({
               type: "success",
               title: "Success",
-              text: "Lesson Type has been created"
+              text: "New thread has been created"
             })
           )
           .then(() => this.back());
@@ -74,5 +74,4 @@ export default {
 </script>
 
 <style>
-
 </style>

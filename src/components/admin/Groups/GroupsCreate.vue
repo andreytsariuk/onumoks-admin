@@ -63,7 +63,7 @@ export default {
             this.$notify({
               type: "success",
               title: "Success",
-              text: "Lesson Type has been created"
+              text: "New group has been created"
             })
           )
           .then(() => this.back());

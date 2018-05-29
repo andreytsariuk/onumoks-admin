@@ -11,6 +11,8 @@ import Positions from '../components/admin/Positions';
 import Calendar from '../components/admin/Calendar/Calendar.vue';
 import LessonTypes from '../components/admin/LessonTypes';
 import Groups from '../components/admin/Groups';
+import Threads from '../components/admin/Threads';
+
 
 
 export const AdminRoutes = [
@@ -189,6 +191,17 @@ export const AdminRoutes = [
     {
         path: 'groups/create',
         component: Groups.Create
+    },
+    //-------------------Threads-------------------------------
+    {
+
+        path: 'threads',
+        component: Threads.List
+
+    },
+    {
+        path: 'threads/create',
+        component: Threads.Create
     }
 
 

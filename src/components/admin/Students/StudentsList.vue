@@ -15,7 +15,9 @@
                         <router-link :to="'students/create'">
                             <v-icon color="primary">create</v-icon>
                         </router-link>
-                        <!-- <v-btn flat class="orange--text">Explore</v-btn> -->
+                        <v-btn :disabled="!selected.length" flat icon color="error">
+                            <v-icon color="error">delete</v-icon>
+                        </v-btn>
                     </v-card-actions>
                 </v-card>
             </v-flex>
@@ -60,9 +62,25 @@
                                     </router-link>
                                 </td>
                                 <td class="text-xs-center">
-                                    <router-link v-if="props.item.course" :to="'courses'">
-                                        {{ props.item.course.title }}
-                                    </router-link>
+                                    <span v-if="props.item.course && props.item.course.id">
+                                        <router-link :to="'courses'">
+                                            {{ props.item.course.title }}
+                                        </router-link>
+                                    </span>
+                                    <span v-else>
+                                        -
+                                    </span>
+                                </td>
+                                <td class="text-xs-center">
+                                    <span v-if="props.item.groups && props.item.groups.length" v-for="group in props.item.groups" :key="group.id">
+                                        <router-link :to="'groups'">
+                                            {{ group.title }}
+                                        </router-link>
+                                        <br>
+                                    </span>
+                                    <span v-else>
+                                        -
+                                    </span>
                                 </td>
                                 <td class="text-xs-center">
                                     <span class="group pa-2">
@@ -124,7 +142,14 @@ export default {
           value: "Specialty",
           sortable: false
         },
+
         { text: "Course", align: "center", value: "Course", sortable: false },
+        {
+          text: "Groups",
+          align: "center",
+          value: "Groups",
+          sortable: false
+        },
         { text: "Actions", align: "center", sortable: false, value: "action" }
       ]
     };
@@ -147,6 +172,7 @@ export default {
     search: {
       handler(newValue, oldValue) {
         if (newValue === oldValue) return;
+        this.loading = true;
         this.listSearch().then(res => {
           this.items = res.items;
           this.totalItems = res.pagination.rowCount;
@@ -178,7 +204,8 @@ export default {
     },
     listSearch() {
       return ApiService.AdminApi.Students.search({
-        search: this.search
+        search: this.search,
+        ...this.pagination
       })
         .then(res => {
           this.loading = false;

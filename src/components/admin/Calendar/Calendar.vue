@@ -1,19 +1,19 @@
 <template>
-    <div>
-        <v-navigation-drawer v-model="drawer" temporary absolute right>
-            <v-list class="pa-1">
-                <v-list-tile avatar>
-                    <!-- <v-list-tile-avatar>
+  <div>
+    <v-navigation-drawer v-model="drawer" temporary absolute right>
+      <v-list class="pa-1">
+        <v-list-tile avatar>
+          <!-- <v-list-tile-avatar>
                             <img src="https://randomuser.me/api/portraits/men/85.jpg">
                         </v-list-tile-avatar> -->
-                    <v-list-tile-content>
-                        <v-list-tile-title>Tasks</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-            </v-list>
-            <v-list class="pt-0" dense>
-                <v-divider></v-divider>
-                <!-- <v-list-tile v-for="item in items" :key="item.title" @click="">
+          <v-list-tile-content>
+            <v-list-tile-title>Tasks</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+      <v-list class="pt-0" dense>
+        <v-divider></v-divider>
+        <!-- <v-list-tile v-for="item in items" :key="item.title" @click="">
                         <v-list-tile-action>
                             <v-icon>{{ item.icon }}</v-icon>
                         </v-list-tile-action>
@@ -22,51 +22,51 @@
                         </v-list-tile-content>
                     </v-list-tile> -->
 
-            </v-list>
-        </v-navigation-drawer>
-        <div class="month">
-            <ul>
-                <li class="prev">
-                    <v-btn @click="prev()" flat icon color="pink">
-                        <v-icon>keyboard_arrow_left</v-icon>
-                    </v-btn>
-                </li>
-                <li class="next">
-                    <v-btn @click="next()" flat icon color="pink">
-                        <v-icon>keyboard_arrow_right</v-icon>
-                    </v-btn>
-                </li>
-                <li>
-                    {{moment(startDay).format('D MMMM')}}<br>
-                    <span style="font-size:18px"> {{moment(startDay).format('YYYY')}}</span>
-                </li>
-            </ul>
-        </div>
-
-        <ul class="weekdays">
-            <li v-for="day in weekDays" :key="day">{{moment(startDay).add(day,'days').format('dddd')}}</li>
-        </ul>
-
-        <ul class="days">
-            <li v-for="day in moment(startDay).add(1, 'month').diff(moment(startDay), 'days')+1" :key="day" @click.stop="drawer = !drawer">
-                <v-card class="hovered">
-                    <v-card-title primary-title>
-                        <div>
-                            <h2 :class="{ pink: moment().isSame(moment(startDay).add(day,'days'),'day') }" class="headline mb-0 ">{{moment(startDay).add(day,'days').format('D')}}
-
-                            </h2>
-                            <h3>{{moment(startDay).add(day,'days').format('MMMM')}} </h3>
-
-                        </div>
-
-                    </v-card-title>
-                    <v-card-actions>
-
-                    </v-card-actions>
-                </v-card>
-            </li>
-        </ul>
+      </v-list>
+    </v-navigation-drawer>
+    <div class="month">
+      <ul>
+        <li class="prev">
+          <v-btn @click="prev()" flat icon color="pink">
+            <v-icon>keyboard_arrow_left</v-icon>
+          </v-btn>
+        </li>
+        <li class="next">
+          <v-btn @click="next()" flat icon color="pink">
+            <v-icon>keyboard_arrow_right</v-icon>
+          </v-btn>
+        </li>
+        <li>
+          {{moment(startDay).format('D MMMM')}}<br>
+          <span style="font-size:18px"> {{moment(startDay).format('YYYY')}}</span>
+        </li>
+      </ul>
     </div>
+
+    <ul class="weekdays">
+      <li v-for="day in weekDays" :key="day">{{moment(startDay).add(day,'days').format('dddd')}}</li>
+    </ul>
+
+    <ul class="days">
+      <li v-for="day in moment(startDay).add(1, 'month').diff(moment(startDay), 'days')+1" :key="day" @click.stop="drawer = !drawer">
+        <v-card class="hovered" :class="{ accent: moment().isSame(moment(startDay).add(day,'days'),'day') }">
+          <v-card-title primary-title>
+            <div>
+              <h2 class="headline mb-0 " :class="{ 'white--text': moment().isSame(moment(startDay).add(day,'days'),'day') }">{{moment(startDay).add(day,'days').format('D')}}
+
+              </h2>
+              <h3 :class="{ 'white--text': moment().isSame(moment(startDay).add(day,'days'),'day') }">{{moment(startDay).add(day,'days').format('MMMM')}} </h3>
+
+            </div>
+
+          </v-card-title>
+          <v-card-actions>
+
+          </v-card-actions>
+        </v-card>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>

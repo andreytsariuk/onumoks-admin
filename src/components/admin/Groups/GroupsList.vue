@@ -44,22 +44,40 @@
                         </template>
 
                         <template slot="items" scope="props">
-                            <tr :active="props.selected" @click="showUser(props.item.id)">
+                            <tr :active="props.selected">
                                 <td @click="props.selected = !props.selected">
                                     <v-checkbox primary hide-details :input-value="props.selected"></v-checkbox>
                                 </td>
                                 <td class="text-xs-center">{{ props.item.id }}</td>
                                 <td class="text-xs-center">{{ props.item.title }}</td>
-                                <td class="text-xs-center">{{ props.item.hours_count || 0}}</td>
-                                <td class="text-xs-center">{{ props.item.created_at }}</td>
+
                                 <td class="text-xs-center">
-                                    <span class="group pa-2">
-                                        <!-- <v-icon>home</v-icon> -->
-                                        <!-- <v-icon>event</v-icon> -->
-                                        <router-link :to="`groups/${props.item.id}`">
-                                            <v-icon>info</v-icon>
+                                    <span v-if="props.item.course && props.item.course.id">
+                                        <router-link :to="'courses'">
+                                            {{ props.item.course.title }}
                                         </router-link>
                                     </span>
+                                    <span v-else>
+                                        -
+                                    </span>
+                                </td>
+                                <td class="text-xs-center">{{ props.item.students_count }}</td>
+
+                                <td class="text-xs-center">{{ props.item.created_at }}</td>
+                                <td class="text-xs-center">{{ props.item.updated_at }}</td>
+
+                                <td class="text-xs-center">
+                                    <span class="group pa-2">
+                                        <v-btn flat icon color="info">
+                                            <router-link :to="`groups/${props.item.id}`">
+                                                <v-icon>info</v-icon>
+                                            </router-link>
+                                        </v-btn>
+                                        <v-btn flat icon color="error" @click="initDelete(props.item)">
+                                            <v-icon color="error">delete</v-icon>
+                                        </v-btn>
+                                    </span>
+
                                 </td>
                             </tr>
                         </template>
@@ -71,7 +89,7 @@
             </v-flex>
 
         </v-layout>
-
+        <ConfrmDialog :okText="'Remove'" :cancelText="'Cancel'" :dialog="dialog" @action="deleteGroup()" @cancel="dialog=false"></ConfrmDialog>
     </div>
 
 </template>
@@ -81,6 +99,7 @@
 <script >
 import { ApiService } from "../../../services";
 import _ from "lodash";
+import ConfrmDialog from "../../Dialogs/ConfirmDialog";
 export default {
   data() {
     return {
@@ -101,24 +120,44 @@ export default {
           value: "id"
         },
         { text: "Title", align: "center", value: "title" },
-        { text: "Hours", align: "center", value: "hours_count" },
+        { text: "Course", align: "center", value: "Course", sortable: false },
+        {
+          text: "Students Count",
+          align: "center",
+          value: "students_count",
+          sortable: false
+        },
         { text: "Created", align: "center", value: "created_at" },
+        { text: "Updated", align: "center", value: "updated_at" },
+
         { text: "Actions", align: "center" }
-      ]
+      ],
+      dialog: false,
+      forDelete: null
     };
   },
-  components: {},
+  components: { ConfrmDialog },
   watch: {
     pagination: {
       handler(newValue, oldValue) {
-        if (!oldValue.page) return;
-
+        if (!oldValue.page || newValue.page === oldValue.page) return;
         this.getDataFromApi().then(res => {
+          console.log("res", res);
           this.items = res.items;
           this.totalItems = res.pagination.rowCount;
         });
       },
       deep: true
+    },
+    search: {
+      handler(newValue, oldValue) {
+        if (newValue === oldValue) return;
+        this.loading = true;
+        this.listSearch().then(res => {
+          this.items = res.items;
+          this.totalItems = res.pagination.rowCount;
+        });
+      }
     }
   },
   mounted() {
@@ -140,16 +179,44 @@ export default {
         this.pagination.descending = false;
       }
     },
-    showUser(userId) {
-      this.selectedUser = userId;
+    initDelete(item) {
+      this.forDelete = item;
+      this.dialog = true;
+    },
+    deleteGroup() {
+      this.loading = true;
+      return ApiService.AdminApi.Groups.delete(this.forDelete.id)
+        .then(res => this.getDataFromApi())
+        .then(() =>
+          this.$notify({
+            type: "success",
+            title: "Success",
+            text: "Group has been removed"
+          })
+        )
+        .then(() => (this.dialog = false));
     },
     getDataFromApi() {
       this.loading = true;
-
       return ApiService.AdminApi.Groups.list(this.pagination)
         .then(res => {
           this.loading = false;
           this.items = res.items;
+          return res;
+        })
+        .catch(err => {
+          this.loading = false;
+          this.items = [];
+          return [];
+        });
+    },
+    listSearch() {
+      return ApiService.AdminApi.Groups.search({
+        search: this.search,
+        ...this.pagination
+      })
+        .then(res => {
+          this.loading = false;
           return res;
         })
         .catch(err => {
@@ -170,6 +237,11 @@ export default {
   transition: width 300ms ease-in-out, height 300ms ease-in-out;
 }
 .card__actions {
+  a {
+    text-decoration: none;
+  }
+}
+.group {
   a {
     text-decoration: none;
   }

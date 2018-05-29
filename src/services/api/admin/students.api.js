@@ -6,7 +6,7 @@ export class Students {
     constructor() {
 
         this.searchTimeout;
-        this.timeout = 7000;
+        this.timeout = 700;
 
     }
 

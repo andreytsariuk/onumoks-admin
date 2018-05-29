@@ -19,7 +19,7 @@ Vue.use(Vuetify, {
   theme: {
     primary: colors.teal.darken3,
     secondary: colors.grey.darken2,
-    accent: '#8c9eff',
+    accent: colors.teal.lighten1,
     error: '#ff0000',
     lighten: colors.grey.lighten4,
   },

@@ -22,6 +22,6 @@ export const AdminApi = {
     Lectors,
     Subjects,
     LessonTypes,
-    Threads,
-    Groups
+    Threads: new Threads(),
+    Groups: new Groups()
 };
