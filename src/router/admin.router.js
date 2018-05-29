@@ -12,6 +12,8 @@ import Calendar from '../components/admin/Calendar/Calendar.vue';
 import LessonTypes from '../components/admin/LessonTypes';
 import Groups from '../components/admin/Groups';
 import Threads from '../components/admin/Threads';
+import Load from '../components/admin/Load';
+
 
 
 
@@ -22,7 +24,27 @@ export const AdminRoutes = [
         path: 'calendar',
         component: Calendar
     },
+    //----------------------Load--------------
+    {
 
+        path: 'load',
+        component: Load.List
+    },
+    {
+
+        path: 'load',
+        component: Load.List
+    },
+    {
+
+        path: 'load/create',
+        component: Load.Create
+    },
+    {
+
+        path: 'load/:id',
+        component: Load.Info
+    },
 
     //-----------------------Users----------------
     {

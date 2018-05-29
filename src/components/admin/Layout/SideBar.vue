@@ -47,6 +47,11 @@ export default {
           link: "/admin/calendar"
         },
         {
+          icon: "hourglass_empty",
+          title: "Load",
+          link: "/admin/load"
+        },
+        {
           icon: "people",
           title: "Users",
           link: "/admin/users"

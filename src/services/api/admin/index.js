@@ -10,9 +10,12 @@ import { Subjects } from './subjects.api';
 import { LessonTypes } from './lessonTypes.api';
 import { Threads } from './threads.api';
 import { Groups } from './groups.api';
+import { Load } from './load.api';
+import { LoadItems } from './loadItems.api';
+
 
 export const AdminApi = {
-    Users,
+    Users: new Users(),
     Invites,
     Files,
     Courses,
@@ -23,5 +26,7 @@ export const AdminApi = {
     Subjects,
     LessonTypes,
     Threads: new Threads(),
-    Groups: new Groups()
+    Groups: new Groups(),
+    Load: new Load(),
+    LoadItems: new LoadItems()
 };

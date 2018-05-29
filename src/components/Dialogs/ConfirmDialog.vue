@@ -6,7 +6,7 @@
                 <v-card-text>Do you realy want to delete this item?</v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="green darken-1" flat @click.native="cancel()">{{cancelText}}</v-btn>
+                    <v-btn color="teal darken-4" flat @click.native="cancel()">{{cancelText}}</v-btn>
                     <v-btn color="green darken-1" flat @click.native="action()">{{okText}}</v-btn>
                 </v-card-actions>
             </v-card>

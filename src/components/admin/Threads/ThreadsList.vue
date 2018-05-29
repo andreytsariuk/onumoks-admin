@@ -60,17 +60,15 @@
                 <td class="text-xs-center">{{ props.item.updated_at }}</td>
 
                 <td class="text-xs-center">
-                  <span class="thread pa-2">
-                    <v-btn flat icon color="info">
-                      <router-link :to="`threads/${props.item.id}`">
-                        <v-icon>info</v-icon>
-                      </router-link>
-                    </v-btn>
-                    <v-btn flat icon color="error" @click="initDelete(props.item)">
-                      <v-icon color="error">delete</v-icon>
-                    </v-btn>
-                  </span>
 
+                  <router-link :to="`threads/${props.item.id}`">
+                    <v-btn flat icon color="accent">
+                      <v-icon>info</v-icon>
+                    </v-btn>
+                  </router-link>
+                  <v-btn flat icon color="error" @click="initDelete(props.item)">
+                    <v-icon color="error">delete</v-icon>
+                  </v-btn>
                 </td>
               </tr>
             </template>
@@ -197,7 +195,11 @@ export default {
             text: "Thread has been removed"
           })
         )
-        .then(() => (this.dialog = false));
+        .then(() => (this.dialog = false))
+        .catch(() => {
+          this.dialog = false;
+          this.loading = false;
+        });
     },
     getDataFromApi() {
       this.loading = true;
@@ -244,9 +246,13 @@ export default {
     text-decoration: none;
   }
 }
-.thread {
-  a {
-    text-decoration: none;
+td {
+  button {
+    margin: 0 !important;
+    display: inline-block !important;
+    a {
+      text-decoration: none;
+    }
   }
 }
 </style>
