@@ -1,7 +1,8 @@
 import Config from "../../../config";
 import { Axios } from "../../";
-import { AuthService } from '../../auth.service'
-export class Lectors {
+import { AuthService } from '../../auth.service';
+
+export class Keywords {
 
     constructor() {
         this.searchTimeout;
@@ -9,20 +10,12 @@ export class Lectors {
     }
 
     list(params = { page: 1, rowsPerPage: 10 }) {
-        return Axios.Api.get(`/v1/admin/lectors`, { params });
+        return Axios.Api.get(`/v1/admin/keywords`, { params });
     }
 
-    uploadArticle(lectorId, file_type, formData) {
-        return Axios.Api.post(`/v1/admin/lectors/${lectorId}/files/${file_type}`, formData);
-    }
+    update(id, newKeyword) {
+        return Axios.Api.put(`/v1/admin/keywords/${id}`, newKeyword);
 
-    createNew(newStudent) {
-        console.log('createNew')
-        return Axios.Api.post(`/v1/admin/lectors/new`, newStudent);
-
-    }
-    createExist(newStudent) {
-        return Axios.Api.post(`/v1/admin/lectors/exist`, newStudent);
     }
 
     search(params = { page: 1, rowsPerPage: 10 }) {

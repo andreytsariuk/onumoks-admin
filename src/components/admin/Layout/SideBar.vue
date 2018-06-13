@@ -108,6 +108,17 @@ export default {
           ]
         },
         {
+          icon: "bubble_chart",
+          title: "Clustering",
+          items: [
+            {
+              icon: "vpn_key",
+              title: "Keywords",
+              link: "/admin/keywords"
+            }
+          ]
+        },
+        {
           icon: "book",
           title: "Books",
           link: "/admin/books"

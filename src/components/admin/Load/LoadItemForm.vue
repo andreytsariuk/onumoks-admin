@@ -5,7 +5,7 @@
         <v-subheader>Subject</v-subheader>
       </v-flex>
       <v-flex xs8>
-        <v-select required label="Course" :items="subjects" v-model="subject" item-text="title" max-height="auto" autocomplete>
+        <v-select required label="Subject" :items="subjects" v-model="subject" item-text="title" max-height="auto" autocomplete>
           <template slot="selection" slot-scope="data">
             <v-icon medium color="primary">subject</v-icon>
             &nbsp; {{ data.item.title }}
@@ -64,7 +64,7 @@
         <v-subheader>Lector</v-subheader>
       </v-flex>
       <v-flex xs8>
-        <v-select :disabled="!subject" required label="Course" :items="lectors" v-model="lector" item-text="user.name" max-height="auto" item-value="id" autocomplete>
+        <v-select :disabled="!subject" required label="Lector" :items="lectors" v-model="lector" item-text="user.name" max-height="auto" item-value="id" autocomplete>
           <template slot="selection" slot-scope="data">
             <div v-if="data.item.user && data.item.user.profile && data.item.user.profile.avatar &&  data.item.user.profile.avatar.publicPath">
               <v-avatar :tile="false" :size="36" color="secondry">
@@ -98,6 +98,19 @@
             </template>
           </template>
         </v-select>
+        <div v-if="lectors.length">
+
+          <v-list-tile-content>
+
+            <v-list-tile-title>
+              <v-icon medium color="primary">account_circle</v-icon>{{lectors[0].user.name}}
+              <v-icon medium color="success">arrow_upward</v-icon>
+            </v-list-tile-title>
+            <v-list-tile-sub-title>
+            </v-list-tile-sub-title>
+          </v-list-tile-content>
+        </div>
+
       </v-flex>
     </v-layout>
     <v-layout row>

@@ -12,21 +12,23 @@ import { Threads } from './threads.api';
 import { Groups } from './groups.api';
 import { Load } from './load.api';
 import { LoadItems } from './loadItems.api';
+import { Keywords } from './keywords.api';
 
 
 export const AdminApi = {
     Users: new Users(),
     Invites,
-    Files,
+    Files: new Files(),
     Courses,
     Specialties,
     Students: new Students(),
     Positions,
-    Lectors,
+    Lectors: new Lectors(),
     Subjects,
     LessonTypes,
     Threads: new Threads(),
     Groups: new Groups(),
     Load: new Load(),
-    LoadItems: new LoadItems()
+    LoadItems: new LoadItems(),
+    Keywords: new Keywords()
 };

@@ -12,12 +12,12 @@ export class LoadItems {
         return Axios.Api.post(`/v1/admin/load/${load_id}/load-items`, newLoadItem);
     }
     delete(load_id, LoadItemId) {
-        return Axios.Api.delete(`/v1/admin/load/${load_id}/load-items`);
+        return Axios.Api.delete(`/v1/admin/load/${load_id}/load-items/${LoadItemId}`);
     }
     get(load_id, LoadItemId) {
-        return Axios.Api.get(`/v1/admin/load/${load_id}/load-items`);
+        return Axios.Api.get(`/v1/admin/load/${load_id}/load-items/${LoadItemId}`);
     }
     update(load_id, LoadItem) {
-        return Axios.Api.put(`/v1/admin/load/${load_id}/load-items`, LoadItem);
+        return Axios.Api.put(`/v1/admin/load/${load_id}/load-items/${LoadItemId}`, LoadItem);
     }
 }

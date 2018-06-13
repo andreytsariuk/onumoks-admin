@@ -13,6 +13,7 @@ import LessonTypes from '../components/admin/LessonTypes';
 import Groups from '../components/admin/Groups';
 import Threads from '../components/admin/Threads';
 import Load from '../components/admin/Load';
+import Keywords from '../components/admin/Keywords';
 
 
 
@@ -192,6 +193,10 @@ export const AdminRoutes = [
         path: 'files',
         component: Files.List
     },
+    {
+        path: 'files/create',
+        component: Files.Create
+    },
     //-------------------Positions-------------------------------
     {
 
@@ -224,7 +229,14 @@ export const AdminRoutes = [
     {
         path: 'threads/create',
         component: Threads.Create
+    },
+    //-------------------Keywords-------------------------------
+    {
+
+        path: 'keywords',
+        component: Keywords.List
     }
+
 
 
 ]
