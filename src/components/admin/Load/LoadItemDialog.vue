@@ -1,19 +1,19 @@
 <template>
-    <v-layout row justify-center>
-        <v-dialog v-model="isOpen" persistent max-width="500">
-            <v-card>
-                <v-card-title class="headline">New Load Item</v-card-title>
-                <v-container fluid style="min-height: 0;" grid-list-lg>
-                    <LoadItemForm ref="GeneralForm"> </LoadItemForm>
-                </v-container>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="teal darken-4" flat @click.native="cancel()">{{cancelText}}</v-btn>
-                    <v-btn color="green darken-1" flat @click.native="create()">{{okText}}</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </v-layout>
+  <v-layout row justify-center>
+    <v-dialog v-model="isOpen" persistent max-width="500">
+      <v-card>
+        <v-card-title class="headline">New Load Item</v-card-title>
+        <v-container fluid style="min-height: 0;" grid-list-lg>
+          <LoadItemForm ref="GeneralForm"> </LoadItemForm>
+        </v-container>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="teal darken-4" flat @click.native="cancel()">{{cancelText}}</v-btn>
+          <v-btn color="green darken-1" flat @click.native="create()">{{okText}}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-layout>
 </template>
 
 

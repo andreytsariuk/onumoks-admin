@@ -64,7 +64,7 @@
         <v-subheader>Lector</v-subheader>
       </v-flex>
       <v-flex xs8>
-        <v-select :disabled="!subject" required label="Lector" :items="lectors" v-model="lector" item-text="user.name" max-height="auto" item-value="id" autocomplete>
+        <v-select :disabled="!subject" required label="Lector" :items="lectors" v-model="lector" item-text="user.name" max-height="auto" item-value="id"  autocomplete>
           <template slot="selection" slot-scope="data">
             <div v-if="data.item.user && data.item.user.profile && data.item.user.profile.avatar &&  data.item.user.profile.avatar.publicPath">
               <v-avatar :tile="false" :size="36" color="secondry">
@@ -98,17 +98,19 @@
             </template>
           </template>
         </v-select>
-        <div v-if="lectors.length">
-
-          <v-list-tile-content>
-
-            <v-list-tile-title>
-              <v-icon medium color="primary">account_circle</v-icon>{{lectors[0].user.name}}
-              <v-icon medium color="success">arrow_upward</v-icon>
-            </v-list-tile-title>
-            <v-list-tile-sub-title>
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
+        <div v-if="recommended.length">
+          <v-list>
+            <v-list-tile v-for="rec in recommended" :key="rec.id" @click="lector=rec">
+              <v-list-tile-content>
+                <v-list-tile-title>
+                  <v-icon medium color="primary">account_circle</v-icon>{{rec.user.name}}
+                  <v-icon medium color="success">arrow_upward</v-icon> {{rec.score}}
+                </v-list-tile-title>
+                <v-list-tile-sub-title>
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
         </div>
 
       </v-flex>
@@ -219,6 +221,7 @@ export default {
       courses: [],
       groups: [],
       threads: [],
+      recommended: [],
       //------------Forms Params
       subject: null,
       lessonType: null,
@@ -272,9 +275,11 @@ export default {
     getLectors(search) {
       ApiService.AdminApi.Lectors.list({
         rowsPerPage: 20,
-        search
+        search,
+        subject_id: this.subject.id
       }).then(res => {
         this.lectors = res.items;
+        this.recommended = res.recommended;
       });
     },
     getGroups(search) {
@@ -303,6 +308,7 @@ export default {
     },
     clear() {
       this.$refs.generalForm.reset();
+      this.recommended = [];
     },
     form() {
       if (this.$refs.generalForm.validate()) {
@@ -310,7 +316,7 @@ export default {
           subject_id: this.subject.id,
           hours_count: this.hours_count,
           lesson_type_id: this.lessonType,
-          lector_id: this.lector,
+          lector_id: this.lector.id ? this.lector.id :this.lector,
           course_id: this.course,
           group_id: this.group,
           thread_id: this.thread
