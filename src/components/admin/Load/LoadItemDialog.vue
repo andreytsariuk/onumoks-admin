@@ -80,3 +80,12 @@ export default {
   }
 };
 </script>
+
+<style  lang="scss">
+.dialog {
+  max-width: 650px !important;
+}
+.btn--floating .icon {
+  height: auto !important;
+}
+</style>
