@@ -9,7 +9,7 @@
                     <v-card-title>
                         <h4> Positions </h4>
                         <v-spacer></v-spacer>
-                        <v-text-field append-icon="search" label="Search by E-mail" single-line hide-details v-model="search"></v-text-field>
+                        <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
                     </v-card-title>
                     <v-card-actions>
                         <router-link :to="'positions/create'">
@@ -52,18 +52,14 @@
                                 <td class="text-xs-center">{{ props.item.name }}</td>
                                 <td class="text-xs-center">{{ props.item.title }}</td>
                                 <td class="text-xs-center">{{ props.item.created_at }}</td>
-                                <td class="text-xs-center">{{ props.item.studentsCount || 0 }}</td>
-                                <td class="text-xs-center">{{ props.item.coursesCount || 0 }}</td>
-                                <td class="text-xs-center">{{ props.item.courses_count || 0}}</td>
-                                <td class="text-xs-center">
+                                <!-- <td class="text-xs-center">
                                     <span class="group pa-2">
-                                        <!-- <v-icon>home</v-icon> -->
-                                        <!-- <v-icon>event</v-icon> -->
-                                        <router-link :to="`specialties/${props.item.id}`">
-                                            <v-icon>info</v-icon>
-                                        </router-link>
+
+                                        <v-btn flat icon color="error" @click="initDelete(props.item)">
+                                            <v-icon color="error">delete</v-icon>
+                                        </v-btn>
                                     </span>
-                                </td>
+                                </td> -->
                             </tr>
                         </template>
 
@@ -105,11 +101,8 @@ export default {
         },
         { text: "Name", align: "center", value: "name" },
         { text: "Title", align: "center", value: "title" },
-        { text: "Created", align: "center", value: "created_at" },
-        { text: "Students Count", align: "center", value: "studentsCount" },
-        { text: "Courses Count", align: "center", value: "coursesCount" },
-        { text: "Threads Count", align: "center", value: "threads_count" },
-        { text: "Actions", align: "center" }
+        { text: "Created", align: "center", value: "created_at" }
+        // { text: "Actions", align: "center" }
       ]
     };
   },

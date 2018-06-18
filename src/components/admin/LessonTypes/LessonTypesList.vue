@@ -9,7 +9,7 @@
                     <v-card-title>
                         <h4> Lesson Types </h4>
                         <v-spacer></v-spacer>
-                        <v-text-field append-icon="search" label="Search by E-mail" single-line hide-details v-model="search"></v-text-field>
+                        <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
                     </v-card-title>
                     <v-card-actions>
                         <router-link :to="'lesson-types/create'">
@@ -52,15 +52,14 @@
                                 <td class="text-xs-center">{{ props.item.name }}</td>
                                 <td class="text-xs-center">{{ props.item.hours_count || 0}}</td>
                                 <td class="text-xs-center">{{ props.item.created_at }}</td>
-                                <td class="text-xs-center">
+                                <!-- <td class="text-xs-center">
                                     <span class="group pa-2">
-                                        <!-- <v-icon>home</v-icon> -->
-                                        <!-- <v-icon>event</v-icon> -->
+                                        
                                         <router-link :to="`lesson-types/${props.item.id}`">
                                             <v-icon>info</v-icon>
                                         </router-link>
                                     </span>
-                                </td>
+                                </td> -->
                             </tr>
                         </template>
 
@@ -102,8 +101,8 @@ export default {
         },
         { text: "Name", align: "center", value: "name" },
         { text: "Hours", align: "center", value: "hours_count" },
-        { text: "Created", align: "center", value: "created_at" },
-        { text: "Actions", align: "center" }
+        { text: "Created", align: "center", value: "created_at" }
+        // { text: "Actions", align: "center" }
       ]
     };
   },

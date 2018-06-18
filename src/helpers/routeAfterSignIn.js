@@ -5,7 +5,7 @@ export const routeAfterSignIn = (res, $router, workspace_name) => {
     let isLector = res.user.short_roles.indexOf("lectors") !== -1;
     switch (true) {
         case isAdmin:
-            return $router.push(`/${workspace_name}/admin`);
+            return $router.push(`/${workspace_name}/admin/calendar`);
             break;
         case isLector:
             return $router.push(`/${workspace_name}/lectors`);

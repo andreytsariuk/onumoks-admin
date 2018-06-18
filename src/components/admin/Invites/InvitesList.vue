@@ -9,7 +9,7 @@
           <v-card-title>
             <h4> Invites </h4>
             <v-spacer></v-spacer>
-            <v-text-field color="white" append-icon="search" label="Search by E-mail" single-line hide-details v-model="search"></v-text-field>
+            <v-text-field color="white" append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
           </v-card-title>
           <v-card-actions>
             <router-link :to="'invites/create'">
@@ -43,18 +43,14 @@
                 </td>
                 <td class="text-xs-center">{{ props.item.id }}</td>
                 <td class="text-xs-center">{{ props.item.email }}</td>
-                <td class="text-xs-center">{{ props.item.user ?props.item.user.name:'-' }}</td>
+                <td class="text-xs-center">{{ props.item.user&&props.item.user.profile ?props.item.user.name:'-' }}</td>
                 <td class="text-xs-center">{{ props.item.token }}</td>
                 <td class="text-xs-center">{{ props.item.created_at }}</td>
-                <td class="text-xs-center">
+                <!-- <td class="text-xs-center">
                   <span class="group pa-2">
-                    <!-- <v-icon>home</v-icon> -->
-                    <!-- <v-icon>event</v-icon> -->
-                    <router-link :to="`specialties/${props.item.id}`">
-                      <v-icon>info</v-icon>
-                    </router-link>
+                
                   </span>
-                </td>
+                </td> -->
               </tr>
             </template>
 
@@ -99,6 +95,7 @@ export default {
         { text: "User", align: "center", value: "user" },
         { text: "Token", align: "center", value: "token" },
         { text: "Created", align: "center", value: "created_at" }
+        // { text: "Actions", align: "center", value: "created_at" }
       ]
     };
   },

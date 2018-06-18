@@ -110,6 +110,7 @@ export default {
         {
           icon: "bubble_chart",
           title: "Clustering",
+          link: "/admin/keywords",
           items: [
             {
               icon: "vpn_key",
@@ -118,11 +119,11 @@ export default {
             }
           ]
         },
-        {
-          icon: "book",
-          title: "Books",
-          link: "/admin/books"
-        },
+        // {
+        //   icon: "book",
+        //   title: "Books",
+        //   link: "/admin/books"
+        // },
         {
           icon: "insert_drive_file",
           title: "Files",

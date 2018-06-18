@@ -9,7 +9,7 @@
           <v-card-title>
             <h4> Invites </h4>
             <v-spacer></v-spacer>
-            <v-text-field color="white" append-icon="search" label="Search by E-mail" single-line hide-details v-model="search"></v-text-field>
+            <v-text-field color="white" append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
           </v-card-title>
           <v-card-actions>
             <router-link :to="'files/create'">

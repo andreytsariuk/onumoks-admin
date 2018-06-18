@@ -9,7 +9,7 @@
                     <v-card-title>
                         <h4> Students </h4>
                         <v-spacer></v-spacer>
-                        <v-text-field append-icon="search" label="Search by E-mail" single-line hide-details v-model="search"></v-text-field>
+                        <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
                     </v-card-title>
                     <v-card-actions>
                         <router-link :to="'students/create'">
@@ -82,16 +82,15 @@
                                         -
                                     </span>
                                 </td>
-                                <td class="text-xs-center">
+                                <!-- <td class="text-xs-center">
                                     <span class="group pa-2">
-                                        <!-- <v-icon>home</v-icon> -->
-                                        <!-- <v-icon>event</v-icon> -->
+                                      
                                         <router-link :to="`users/${props.item.id}`">
                                             <v-icon>info</v-icon>
                                         </router-link>
                                     </span>
 
-                                </td>
+                                </td> -->
                             </tr>
                         </template>
 
@@ -149,8 +148,8 @@ export default {
           align: "center",
           value: "Groups",
           sortable: false
-        },
-        { text: "Actions", align: "center", sortable: false, value: "action" }
+        }
+        // { text: "Actions", align: "center", sortable: false, value: "action" }
       ]
     };
   },

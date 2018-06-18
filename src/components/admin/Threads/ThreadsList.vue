@@ -9,7 +9,7 @@
           <v-card-title>
             <h4> Threads </h4>
             <v-spacer></v-spacer>
-            <v-text-field append-icon="search" label="Search by E-mail" single-line hide-details v-model="search"></v-text-field>
+            <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
           </v-card-title>
           <v-card-actions>
             <router-link :to="'threads/create'">
@@ -61,11 +61,11 @@
 
                 <td class="text-xs-center">
 
-                  <router-link :to="`threads/${props.item.id}`">
+                  <!-- <router-link :to="`threads/${props.item.id}`">
                     <v-btn flat icon color="accent">
                       <v-icon>info</v-icon>
                     </v-btn>
-                  </router-link>
+                  </router-link> -->
                   <v-btn flat icon color="error" @click="initDelete(props.item)">
                     <v-icon color="error">delete</v-icon>
                   </v-btn>

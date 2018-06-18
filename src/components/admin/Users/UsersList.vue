@@ -9,7 +9,7 @@
           <v-card-title>
             <h4> Users </h4>
             <v-spacer></v-spacer>
-            <v-text-field append-icon="search" label="Search by E-mail" single-line hide-details v-model="search"></v-text-field>
+            <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
           </v-card-title>
           <v-card-actions>
             <v-btn flat>

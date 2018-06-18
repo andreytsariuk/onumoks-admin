@@ -9,7 +9,7 @@
                     <v-card-title>
                         <h4> Lectors </h4>
                         <v-spacer></v-spacer>
-                        <v-text-field append-icon="search" label="Search by E-mail" single-line hide-details v-model="search"></v-text-field>
+                        <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
                     </v-card-title>
                     <v-card-actions>
                         <router-link :to="'lectors/create'">
@@ -68,16 +68,17 @@
                                         -
                                     </span>
                                 </td>
-                                <td class="text-xs-center">
+                                <!-- <td class="text-xs-center">
                                     <span class="group pa-2">
-                                        <!-- <v-icon>home</v-icon> -->
-                                        <!-- <v-icon>event</v-icon> -->
+                                      
                                         <router-link :to="`users/${props.item.id}`">
                                             <v-icon>info</v-icon>
                                         </router-link>
                                     </span>
-
-                                </td>
+                                    <v-btn flat icon color="error" @click="initDelete(props.item)">
+                                        <v-icon color="error">delete</v-icon>
+                                    </v-btn>
+                                </td> -->
                             </tr>
                         </template>
 
@@ -123,8 +124,8 @@ export default {
         { text: "E-mail", align: "center", value: "id" },
         { text: "Name", align: "center", value: "name" },
         { text: "Position", align: "center", value: "Specialty" },
-        { text: "Hours Count", align: "center", value: "Course" },
-        { text: "Actions", align: "center", sortable: false, value: "action" }
+        { text: "Hours Count", align: "center", value: "Course" }
+        // { text: "Actions", align: "center", sortable: false, value: "action" }
       ]
     };
   },
